@@ -28,43 +28,31 @@ export default function LoginForm() {
             non_field_errors: null
         }));
     };
-   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrors({});
-
-    try {
-        // 💥 1. сначала получаем CSRF cookie
-        await fetch(`${API_URL}/api/csrf/`, {
-            credentials: "include",
-        });
-
-        // 💥 2. берём csrf из cookie (он уже точно появится)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setErrors({});
         const csrftoken = getCookie("csrftoken");
-
-        // 💥 3. login запрос
-        const res = await fetch(`${API_URL}/api/login/`, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
-            },
-            body: JSON.stringify(form),
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-            setUser(data.user);
-            closeAuthModal();
-            navigate("/");
-        } else {
-            setErrors(data);
+        try {
+            const res = await fetch(`${API_URL}/api/login/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken
+                },
+                credentials: "include",
+                body: JSON.stringify(form)
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setUser(data.user);
+                closeAuthModal();
+                navigate("/");
+            } else {
+                setErrors(data);
+            }
+        } catch (err) {
+            console.error("Network error:", err);
         }
-
-    } catch (err) {
-        console.error("Network error:", err);
-    }
     };
 
     return (
