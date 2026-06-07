@@ -13,19 +13,19 @@ DEBUG = os.getenv('DEBUG') == 'True'
 import os
 
 raw_hosts = os.getenv("ALLOWED_HOSTS", "")
+ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(",") if h.strip()]
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in raw_hosts.split(",")
-    if host.strip()
-]
-
-SECRET_KEY = os.getenv('SECRET_KEY')
 CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
-    if origin.strip()
+    o.strip()
+    for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if o.strip()
 ]
+
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
+
+DATABASES = {
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL", "").strip())
+}
 
 # Cookie Session настройка
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
@@ -84,11 +84,6 @@ WSGI_APPLICATION = 'vnukovo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.parse(
-        os.environ.get("DATABASE_URL", "").strip()
-    )
-}
 
 
 # Password validation
