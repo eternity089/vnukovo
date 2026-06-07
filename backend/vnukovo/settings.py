@@ -10,7 +10,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
+import os
+
+raw_hosts = os.getenv("ALLOWED_HOSTS", "")
+
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in raw_hosts.split(",")
+    if host.strip()
+]
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS')
 
