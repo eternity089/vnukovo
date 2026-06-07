@@ -139,6 +139,7 @@ export default function CreateOrder() {
             credentials: "include", // 👈 КРИТИЧНО
             headers: {
                 "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"),
             },
             body: JSON.stringify(payload),
         });
