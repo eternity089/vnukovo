@@ -131,11 +131,11 @@ export default function CreateOrder() {
         };
         const res = await fetch(`${API_URL}/api/booking/create/`, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrftoken"),
             },
-            credentials: "include",
             body: JSON.stringify(payload),
         });
         const data = await res.json();
