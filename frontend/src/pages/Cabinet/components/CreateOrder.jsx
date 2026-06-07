@@ -140,10 +140,10 @@ export default function CreateOrder() {
         });
         const data = await res.json();
         if (!res.ok) {
+            console.log("csrf =", getCookie("csrftoken"));
             console.log(data);
             return;
         }
-        console.log("csrf =", getCookie("csrftoken"));
         alert("Заявка создана");
         resetForm()
         loadAvailability()
