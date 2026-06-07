@@ -18,11 +18,8 @@ from app.serializers import *
 
 from django.middleware.csrf import get_token
 from django.http import JsonResponse
+from rest_framework_simplejwt.tokens import RefreshToken
 
-def csrf(request):
-    return JsonResponse({
-        "csrfToken": get_token(request)
-    })
 
 # Create your views here.
 class ReviewListAPIView(ListAPIView):
@@ -87,44 +84,53 @@ class BathProgramAPIView(APIView):
         serializer = BathProgramSerializer(programs, many=True)
         return Response(serializer.data)
 
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        "refresh": str(refresh),
+        "access": str(refresh.access_token),
+    }
+
 class RegisterAPIView(APIView):
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
+
         if serializer.is_valid():
             user = serializer.save()
-            login(request, user)
+
+            tokens = get_tokens_for_user(user)
+
             return Response({
-                'message': 'User created',
-                'user': {
-                    'id': user.id,
-                    'name': user.name,
-                    'email': user.email
-                }
+                "message": "User created",
+                "user": {
+                    "id": user.id,
+                    "name": user.name,
+                    "email": user.email
+                },
+                **tokens
             }, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+from rest_framework.permissions import IsAuthenticated
 
 class MeAPIView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
-        if request.user.is_authenticated:
-            return Response({
-                "id": request.user.id,
-                "name": request.user.name,
-                "surname": request.user.surname,
-                "phone": request.user.phone,
-                "email": request.user.email,
-                "avatar": (
-                    request.build_absolute_uri(
-                        request.user.avatar.url
-                    )
-                    if request.user.avatar
-                    else None
-                ),
-                "is_superuser": request.user.is_superuser,
-            })
-        return Response({"user": None})
+        user = request.user
+        return Response({
+            "id": user.id,
+            "name": user.name,
+            "surname": user.surname,
+            "phone": user.phone,
+            "email": user.email,
+            "avatar": (
+                request.build_absolute_uri(user.avatar.url)
+                if user.avatar else None
+            ),
+            "is_superuser": user.is_superuser,
+        })
 
-@method_decorator(ensure_csrf_cookie, name="dispatch")
 class LoginAPIView(APIView):
     def post(self, request):
         email = request.data.get("email")
@@ -133,7 +139,8 @@ class LoginAPIView(APIView):
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            login(request, user)
+            tokens = get_tokens_for_user(user)
+
             return Response({
                 "message": "Login successful",
                 "user": {
@@ -147,7 +154,8 @@ class LoginAPIView(APIView):
                         if user.avatar else None
                     ),
                     "is_superuser": user.is_superuser
-                }
+                },
+                **tokens
             }, status=status.HTTP_200_OK)
 
         return Response(
@@ -157,11 +165,21 @@ class LoginAPIView(APIView):
 
 class LogoutAPIView(APIView):
     def post(self, request):
-        logout(request)
-        return Response(
-            {'message': 'User logged out'},
-            status=status.HTTP_200_OK
-        )
+        try:
+            refresh_token = request.data.get("refresh")
+
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(
+                {"message": "User logged out"},
+                status=status.HTTP_200_OK
+            )
+        except Exception:
+            return Response(
+                {"error": "Invalid token"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 class UserProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]

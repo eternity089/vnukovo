@@ -24,8 +24,18 @@ export default function Header() {
         setMenuOpen(false);
     }, [location.pathname]);
     const handleLogout = async () => {
-        await logout();
-        navigate("/");
+        await fetch(`${API_URL}/api/logout/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                refresh: localStorage.getItem("refresh")
+            })
+        });
+        navigate('/')
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
     };
 
     return (

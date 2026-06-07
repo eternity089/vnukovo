@@ -33,29 +33,26 @@ export default function LoginForm() {
     setErrors({});
 
     try {
-        // 💥 1. сначала получаем CSRF cookie
-        await fetch(`${API_URL}/api/csrf/`, {
-            credentials: "include",
-        });
-
-        // 💥 2. берём csrf из cookie (он уже точно появится)
-        const csrftoken = getCookie("csrftoken");
-
-        // 💥 3. login запрос
-        const res = await fetch(`${API_URL}/api/login/`, {
+        const res = await fetch(`${API_URL}/api/token/`, {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
             },
-            body: JSON.stringify(form),
+            body: JSON.stringify({
+                email: form.email,
+                password: form.password,
+            }),
         });
 
         const data = await res.json();
 
         if (res.ok) {
-            setUser(data.user);
+            // 💥 сохраняем токен
+            localStorage.setItem("access", data.access);
+            localStorage.setItem("refresh", data.refresh);
+
+            setUser({ email: form.email });
+
             closeAuthModal();
             navigate("/");
         } else {
@@ -63,7 +60,7 @@ export default function LoginForm() {
         }
 
     } catch (err) {
-        console.error("Network error:", err);
+        console.error(err);
     }
     };
 

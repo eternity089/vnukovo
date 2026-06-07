@@ -32,32 +32,39 @@ export default function RegisterForm() {
             [name]: null
         }));
     };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setErrors({});
-        const csrftoken = getCookie("csrftoken");
-        try {
-            const res = await fetch(`${API_URL}/api/register/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": csrftoken
-                },
-                credentials: "include",
-                body: JSON.stringify(form)
-            });
-            const data = await res.json();
-            console.log(data);
-            if (res.ok) {
-                setUser(data.user);
-                closeAuthModal();
-                navigate("/");
-            } else {
-                setErrors(data);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+
+    try {
+        const res = await fetch(`${API_URL}/api/register/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form),
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        if (res.ok) {
+            // 💥 сохраняем токены (если backend их возвращает)
+            if (data.access && data.refresh) {
+                localStorage.setItem("access", data.access);
+                localStorage.setItem("refresh", data.refresh);
             }
-        } catch (err) {
-            console.error("Network error:", err);
+
+            setUser(data.user);
+            closeAuthModal();
+            navigate("/");
+        } else {
+            setErrors(data);
         }
+
+    } catch (err) {
+        console.error("Network error:", err);
+    }
     };
 
     return (
