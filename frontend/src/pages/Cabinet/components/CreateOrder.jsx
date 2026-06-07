@@ -105,47 +105,57 @@ export default function CreateOrder() {
             .then(data => setBathPrograms(data))
             .catch(err => console.log(err))
     }, []);
-    const handleSubmit = async () => {
-        const payload = {
-            comment: form.comment,
-            home_booking: bookingType.house
-                ? {
-                    check_in: homeDates.check_in,
-                    check_out: homeDates.check_out,
-                    guests_count: guests,
-                    extra_place: homeDates.extra_place,
-                    with_pet: homeDates.with_pet,
-                }
-                : null,
-            bath_booking: bookingType.bath
-                ? {
-                    check_in: bathData.check_in,
-                    duration: bathData.duration,
-                    bath_tub: bathData.bath_tub,
-                    bath_tub_filling: bathData.bath_tub_filling,
-                    steaming: bathData.steaming,
-                    steam_program: bathData.steam_program,
-                    whisk: bathData.whisk,
-                }
-                : null,
-        };
+  const handleSubmit = async () => {
+    const payload = {
+        comment: form.comment,
+        home_booking: bookingType.house
+            ? {
+                check_in: homeDates.check_in,
+                check_out: homeDates.check_out,
+                guests_count: guests,
+                extra_place: homeDates.extra_place,
+                with_pet: homeDates.with_pet,
+            }
+            : null,
+        bath_booking: bookingType.bath
+            ? {
+                check_in: bathData.check_in,
+                duration: bathData.duration,
+                bath_tub: bathData.bath_tub,
+                bath_tub_filling: bathData.bath_tub_filling,
+                steaming: bathData.steaming,
+                steam_program: bathData.steam_program,
+                whisk: bathData.whisk,
+            }
+            : null,
+    };
+
+    try {
         const res = await fetch(`${API_URL}/api/booking/create/`, {
             method: "POST",
-            credentials: "include",
+            credentials: "include", // 👈 КРИТИЧНО
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(payload),
         });
+
         const data = await res.json();
+
         if (!res.ok) {
-            console.log(data);
+            console.log("booking error:", data);
             return;
         }
+
         alert("Заявка создана");
-        resetForm()
-        loadAvailability()
-    };
+
+        resetForm();
+        loadAvailability();
+
+    } catch (err) {
+        console.error("Network error:", err);
+    }
+};
     return (
         <div className="flex flex-col gap-8">
             <div>

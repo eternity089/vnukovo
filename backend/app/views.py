@@ -16,6 +16,14 @@ from app.models import *
 from app.serializers import *
 
 
+from django.middleware.csrf import get_token
+from django.http import JsonResponse
+
+def csrf(request):
+    return JsonResponse({
+        "csrfToken": get_token(request)
+    })
+
 # Create your views here.
 class ReviewListAPIView(ListAPIView):
     queryset = Review.objects.filter(is_published=True)[:6]
