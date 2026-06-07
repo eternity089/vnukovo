@@ -113,11 +113,14 @@ class RegisterAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 class MeAPIView(APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         user = request.user
+
         return Response({
             "id": user.id,
             "name": user.name,
