@@ -1,0 +1,417 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --color-h: #CA8E5D;
+  --color-border: #ca8e5dab;
+  --color-bg: #FFF3EA;
+  --color-body: #B1A79F;
+  --color-hover: #A26E44;
+  --color-input:#674327;
+
+  --font-inter: 'inter', arial;
+  --font-infant: 'infant', sans-serif;
+}
+
+:root{
+  font-family: Inter;
+  /* letter-spacing: 1px; */
+  font-size: 18px;
+  scroll-behavior: smooth;
+}
+body{
+  letter-spacing: 1px;
+  overflow-x: hidden;
+}
+h1,h2, h3{
+  font-family: Cormorant Infant;
+  text-transform: uppercase;
+}
+a h3{
+  text-transform: none;
+}
+
+h2 {
+  font-size: 48px;
+  color: var(--color-h);
+  font-weight: 500;
+  line-height: 70px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 200%;
+  color: var(--color-body);
+  letter-spacing: 1px;
+}
+
+@media (max-width:768px) {
+  h2{
+    font-size: 36px;
+  }
+  p{
+    font-size: 16px;
+  }
+}
+@media (max-width: 480px) {
+  h2{
+    font-size: 30px;
+  }
+  p{
+    font-size: 14px;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.input {
+  @apply w-full px-4 py-3 border rounded-full border-h/60 hover:border-hover placeholder:text-h focus:outline-none focus:ring-1 focus:ring-input;
+}
+
+.cls-1{
+  fill: #af9787;
+}
+/* --- 1. ЛИНИИ ДЕРЕВА (WOOD-LINE) --- */
+.wood-line {
+  fill: #b59984; /* Сразу задаем фирменный цвет заливки */
+
+  /* Изначально скрываем маской (срезано на 100% снизу) */
+  clip-path: inset(100% 0 0 0);
+
+  /* Анимация длится 3 секунды, зациклена (infinite) */
+  animation: woodLineCycle 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* --- 2. БУКВЫ (LETTER) --- */
+.letter {
+  fill: #b59984;
+  opacity: 0;
+  transform: translateY(5px);
+
+  /* Синхронно запускаем ту же 3-секундную анимацию */
+  animation: letterCycle 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+
+/* --- 3. ТАЙМИНГИ И РАСПРЕДЕЛЕНИЕ ВНУТРИ 3-Х СЕКУНД (KEYFRAMES) --- */
+
+/* Расчет для линий дерева:
+   0% -> 35%  — Плавно проявляются снизу вверх (заливка)
+   35% -> 80% — Логотип полностью собран и статичен (пользователь его видит)
+   80% -> 90% — Быстрое исчезновение перед перезапуском
+   90% -> 100%— Пауза в скрытом состоянии перед новым кругом
+*/
+@keyframes woodLineCycle {
+  0% {
+    clip-path: inset(100% 0 0 0);
+  }
+  35%, 80% {
+    clip-path: inset(0% 0 0 0); /* Полностью открыты */
+  }
+  90%, 100% {
+    clip-path: inset(100% 0 0 0); /* Исчезают */
+  }
+}
+
+/* Расчет для букв:
+   Появляются чуть позже линий (начиная с 25% времени), чтобы создать динамику.
+   В остальном синхронно замирают и исчезают вместе с деревом.
+*/
+@keyframes letterCycle {
+  0%, 25% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  45%, 80% {
+    opacity: 1;
+    transform: translateY(0); /* Буквы проявились и стоят */
+  }
+  90%, 100% {
+    opacity: 0;
+    transform: translateY(5px); /* Исчезают */
+  }
+}
+
+
+.react-datepicker {
+  border: none;
+  padding: 18px;
+  font-family: inherit;
+  background: #ffffff;
+  animation: fadeInCalendar 0.15s ease;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+}
+.react-datepicker__month-container {
+  width: 100% !important;
+}
+
+.react-datepicker__header {
+  background: transparent;
+  border-bottom: none;
+  padding-top: 8px;
+}
+
+.react-datepicker__current-month {
+  font-size: 18px;
+  font-weight: 600;
+  color: #674327;
+}
+
+.react-datepicker__day-names {
+  margin-top: 12px;
+}
+
+.react-datepicker__day-name {
+  color: #B1A79F;
+  font-size: 12px;
+  width: 1.6rem;
+}
+@media (min-width: 768px) {
+  .react-datepicker__day-names{
+    display: flex;
+    justify-content: space-between;
+  }
+  .react-datepicker__day-name{
+    width: 2.8rem;
+  }
+}
+
+.react-datepicker__navigation {
+  top: 18px;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #CA8E5D;
+}
+
+.react-datepicker__month {
+  margin: 0;
+}
+
+.react-datepicker__week {
+  display: flex;
+  justify-content: space-between;
+}
+
+.react-datepicker__day {
+  width: 2.8rem;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  font-size: 14px;
+  border-radius: 12px;
+  margin: 2px;
+  color: #674327;
+  transition: all 0.18s ease;
+  position: relative;
+}
+
+.react-datepicker__day:hover {
+  background: #FFF3EA;
+  color: #A26E44;
+  transform: scale(1.05);
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end {
+  background: #CA8E5D !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  box-shadow: 0 6px 18px rgba(202, 142, 93, 0.35);
+}
+
+.react-datepicker__day--in-range {
+  background: #FFF3EA;
+  color: #674327;
+  border-radius: 10px;
+}
+
+.react-datepicker__day--range-start {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.react-datepicker__day--range-end {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.react-datepicker__day--today {
+  border: 1px solid #CA8E5D;
+  font-weight: 600;
+}
+
+.react-datepicker__day--disabled {
+  color: #E5DED8 !important;
+  background: transparent !important;
+  cursor: not-allowed;
+}
+
+.react-datepicker__day--in-selecting-range {
+  background: #FFF3EA !important;
+  color: #674327 !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background: transparent !important;
+  color: #674327 !important;
+  box-shadow: none !important;
+}
+
+.react-datepicker__day:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(202, 142, 93, 0.25) !important;
+}
+
+.react-datepicker-popper {
+  z-index: 50;
+}
+
+.selecting-range .react-datepicker__day:hover {
+  background: #FFF3EA !important;
+  color: #A26E44 !important;
+  transform: scale(1.06);
+  cursor: pointer;
+}
+
+@keyframes fadeInCalendar {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end,
+.react-datepicker__day--keyboard-selected {
+  background: #FFF3EA !important;
+  color: #674327 !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+/* УБИРАЕМ ВСЕ СИНИЕ HOVER/ACTIVE STATES */
+.react-datepicker__day:active,
+.react-datepicker__day:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  background: #FFF3EA !important;
+  color: #674327 !important;
+}
+
+/* ВАЖНО: убираем drag highlight (это главный источник синего) */
+.react-datepicker__day--selecting-range {
+  background: #FFF3EA !important;
+  color: #674327 !important;
+}
+@media (max-width: 480px) {
+
+  .airbnb-calendar {
+    width: 100%;
+  }
+
+  .react-datepicker {
+    padding: 0;
+    width: 100% !important;
+    max-width: 360px !important;
+  }
+  .react-datepicker__day-names{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .react-datepicker__day,
+  .react-datepicker__day-name {
+    width: 2.8rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+  }
+}
+
+.house-half {
+  position: relative;
+}
+
+.house-half::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+  background: #CA8E5D;
+}
+
+.house-full {
+  background: #f3f3f3 !important;
+  color: #c5c5c5 !important;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 22px;
+    height: 22px;
+
+    border: 2px solid #ca8e5dab;
+    border-radius: 7px;
+
+    background: #fff;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+
+    position: relative;
+    flex-shrink: 0;
+}
+
+input[type="checkbox"]:hover {
+    border-color: #CA8E5D;
+    background: #FFF3EA;
+}
+
+input[type="checkbox"]:checked {
+    background: #CA8E5D;
+    border-color: #CA8E5D;
+}
+
+input[type="checkbox"]:checked::after {
+    content: "✓";
+
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(202, 142, 93, .2);
+}
