@@ -5,7 +5,6 @@ import Button from "../ui/Button/Button.jsx";
 import { getCookie } from "../../utils/cookies";
 import { useAuth } from "../../context/AuthContext.jsx";
 import {useUI} from "../../context/UIContext.jsx";
-import {API_URL} from "../../shared/api.js";
 
 export default function LoginForm() {
     const {closeAuthModal, openAuthModal} = useUI()
