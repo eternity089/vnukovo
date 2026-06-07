@@ -45,7 +45,6 @@ CORS_ALLOWED_ORIGINS = [
     for origin in raw_origins.split(",")
     if origin.strip()
 ]
-CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 

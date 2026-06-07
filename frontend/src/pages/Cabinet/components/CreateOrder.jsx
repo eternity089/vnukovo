@@ -134,6 +134,7 @@ export default function CreateOrder() {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"),
             },
             body: JSON.stringify(payload),
         });
@@ -142,6 +143,7 @@ export default function CreateOrder() {
             console.log(data);
             return;
         }
+        console.log("csrf =", getCookie("csrftoken"));
         alert("Заявка создана");
         resetForm()
         loadAvailability()
