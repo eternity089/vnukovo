@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import OrderCard from "./OrderCard.jsx";
 import {getCookie} from "../../../utils/cookies.js"
+import {API_URL} from "../../../shared/api.js";
 
 
 export default function OrdersTab(){
     const [orders,setOrders] = useState([])
     useEffect(() => {
-        fetch('api/bookings/', {
+        fetch(`${API_URL}/api/bookings/`, {
             credentials:'include'
         })
             .then(res => res.json())
@@ -14,7 +15,7 @@ export default function OrdersTab(){
     }, []);
     const cancelBooking = async (id) => {
     try {
-        const res = await fetch(`/api/booking/${id}/cancel/`, {
+        const res = await fetch(`${API_URL}/api/booking/${id}/cancel/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

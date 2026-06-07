@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
 import Container from "../../../components/ui/Container/Container.jsx";
 import GalleryItem from "../components/GalleryItem.jsx";
+import {API_URL} from "../../../shared/api.js";
 
 export default function GallerySection(){
     const [images, setImages] = useState([])
     useEffect(() => {
-        fetch('api/gallery/')
+        fetch(`${API_URL}/api/gallery/`)
             .then(res => res.json())
             .then(data => setImages(data))
     }, []);

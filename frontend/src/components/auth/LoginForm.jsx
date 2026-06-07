@@ -5,6 +5,7 @@ import Button from "../ui/Button/Button.jsx";
 import { getCookie } from "../../utils/cookies";
 import { useAuth } from "../../context/AuthContext.jsx";
 import {useUI} from "../../context/UIContext.jsx";
+import {API_URL} from "../../shared/api.js";
 
 export default function LoginForm() {
     const {closeAuthModal, openAuthModal} = useUI()
@@ -32,7 +33,7 @@ export default function LoginForm() {
         setErrors({});
         const csrftoken = getCookie("csrftoken");
         try {
-            const res = await fetch("/api/login/", {
+            const res = await fetch(`${API_URL}/api/login/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

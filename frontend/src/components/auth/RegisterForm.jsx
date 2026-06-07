@@ -6,6 +6,7 @@ import { getCookie } from "../../utils/cookies";
 
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useUI } from "../../context/UIContext.jsx";
+import {API_URL} from "../../shared/api.js";
 
 export default function RegisterForm() {
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function RegisterForm() {
         setErrors({});
         const csrftoken = getCookie("csrftoken");
         try {
-            const res = await fetch("/api/register/", {
+            const res = await fetch(`${API_URL}/api/register/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

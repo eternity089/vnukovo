@@ -1,11 +1,12 @@
 import Review from "../components/Review.jsx";
 import Container from "../../../components/ui/Container/Container.jsx";
 import {useEffect, useState} from "react";
+import {API_URL} from "../../../shared/api.js";
 
 export default function ReviewSection(){
     const [reviews, setReviews] = useState([])
     useEffect(() => {
-        fetch("api/reviews").then((response) => response.json()).then((data) => {setReviews(data)})
+        fetch(`${API_URL}/api/reviews`).then((response) => response.json()).then((data) => {setReviews(data)})
     }, []);
     return(
        <Container className="mx-4 lg:mx-12">

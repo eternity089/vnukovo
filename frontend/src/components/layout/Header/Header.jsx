@@ -11,6 +11,7 @@ import RegisterForm from "../../auth/RegisterForm.jsx";
 import LoginForm from "../../auth/LoginForm.jsx";
 import { useAuth } from "../../../context/AuthContext.jsx";
 import { useUI } from "../../../context/UIContext.jsx";
+import {API_URL} from "../../../shared/api.js";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -43,7 +44,7 @@ export default function Header() {
                                     {user?.is_superuser ? (
                                         <Button type="button" variant={isHome ? "outline" : "primary"}
                                             onClick={() => {
-                                                window.location.href = "http://127.0.0.1:8000/admin/";
+                                                window.location.href = `${API_URL}/admin/`;
                                             }}>Панель администратора</Button>
                                     ) : (
                                         <Link to="/cabinet">

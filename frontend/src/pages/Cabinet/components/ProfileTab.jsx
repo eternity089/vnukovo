@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../context/AuthContext.jsx";
 import {getCookie} from "../../../utils/cookies.js"
 import Loader from "../../../components/ui/Loader/Loader.jsx";
+import {API_URL} from "../../../shared/api.js";
 export default function ProfileTab() {
     const { user, setUser } = useAuth();
     const fileInputRef = useRef(null);
@@ -42,7 +43,7 @@ export default function ProfileTab() {
     };
     const handleDeleteAvatar = async() =>{
         try{
-            const res = await fetch('/api/cabinet/avatar/', {
+            const res = await fetch(`${API_URL}/api/cabinet/avatar/`, {
                 method: "DELETE",
                 credentials:'include',
                 headers:{
@@ -76,7 +77,7 @@ export default function ProfileTab() {
             formData.append('avatar', avatarFile)
         }
         try{
-            const res = await fetch('/api/cabinet/', {
+            const res = await fetch(`${API_URL}/api/cabinet/`, {
                 method: "PATCH",
                 credentials:'include',
                 headers:{

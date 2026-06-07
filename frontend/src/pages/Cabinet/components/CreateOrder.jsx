@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker'
 import {ru} from 'date-fns/locale'
 import {Listbox} from '@headlessui/react'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
+import {API_URL} from "../../../shared/api.js";
 
 export default function CreateOrder() {
     const resetForm = () => {
@@ -43,10 +44,10 @@ export default function CreateOrder() {
         });
     };
     const loadAvailability = () => {
-        fetch('api/booking/house-availability/')
+        fetch(`${API_URL}/api/booking/house-availability/`)
             .then(res => res.json())
             .then(data => setHouseAvailability(data))
-        fetch('api/booking/bath-availability/')
+        fetch(`${API_URL}/api/booking/bath-availability/`)
             .then(res => res.json())
             .then(data => setBathAvailability(data))
     }
@@ -99,7 +100,7 @@ export default function CreateOrder() {
         { value: "fir", label: "Пихта" }
     ]
     useEffect(() => {
-        fetch('api/bath-programs/')
+        fetch(`${API_URL}/api/bath-programs/`)
             .then(res => res.json())
             .then(data => setBathPrograms(data))
             .catch(err => console.log(err))
@@ -128,7 +129,7 @@ export default function CreateOrder() {
                 }
                 : null,
         };
-        const res = await fetch("/api/booking/create/", {
+        const res = await fetch(`${API_URL}/api/booking/create/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

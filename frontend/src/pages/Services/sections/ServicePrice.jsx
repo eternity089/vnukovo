@@ -3,6 +3,7 @@ import bathImage from "../../../assets/img/price/bath.png"
 import Container from "../../../components/ui/Container/Container.jsx";
 import ServicePriceOptions from "../components/ServicePriceOptions.jsx";
 import Modal from "../../../components/ui/Modal/Modal.jsx";
+import {API_URL} from "../../../shared/api.js";
 
 export default function ServicePrice() {
 
@@ -12,7 +13,7 @@ export default function ServicePrice() {
     const [programs, setPrograms] = useState([])
 
     useEffect(() => {
-        fetch('/api/services/')
+        fetch(`${API_URL}/api/services/`)
             .then(res => res.json())
             .then(data => {
                 const updatedData = data.map((section) => {
@@ -30,7 +31,7 @@ export default function ServicePrice() {
 
     }, []);
     useEffect(() => {
-        fetch(`/api/bath-programs/`)
+        fetch(`${API_URL}/api/bath-programs/`)
             .then(res => res.json())
             .then(data => setPrograms(data))
     }, []);

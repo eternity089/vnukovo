@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getCookie } from "../utils/cookies.js";
+import {API_URL} from "../shared/api.js";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -7,7 +8,7 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const startTime = Date.now();
-        fetch("/api/me/", {
+        fetch(`${API_URL}/api/me/`, {
             credentials: "include"
         })
             .then(res => res.json())
@@ -25,7 +26,7 @@ export function AuthProvider({ children }) {
     }, []);
     const logout = async () => {
         const csrftoken = getCookie("csrftoken");
-        await fetch("/api/logout/", {
+        await fetch(`${API_URL}/api/logout/`, {
             method: "POST",
             credentials: "include",
             headers: {
