@@ -131,6 +131,9 @@ export default function CreateOrder() {
     };
 
     try {
+         await fetch(`${API_URL}/api/csrf/`, {
+            credentials: "include",
+        });
         const res = await fetch(`${API_URL}/api/booking/create/`, {
             method: "POST",
             credentials: "include", // 👈 КРИТИЧНО
