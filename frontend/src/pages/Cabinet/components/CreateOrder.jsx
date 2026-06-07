@@ -134,7 +134,6 @@ export default function CreateOrder() {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrftoken"),
             },
             body: JSON.stringify(payload),
         });
