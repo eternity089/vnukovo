@@ -14,10 +14,18 @@ import os
 
 raw_hosts = os.getenv("ALLOWED_HOSTS", "")
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in raw_hosts.split(",")
+    if host.strip()
+]
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-# CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
 
 # Cookie Session настройка
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
