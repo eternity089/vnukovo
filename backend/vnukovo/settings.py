@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'vnukovo.wsgi.application'
 
 DATABASES = {
     "default": dj_database_url.parse(
-        os.getenv("DATABASE_URL")
+        os.environ.get("DATABASE_URL", "").strip()
     )
 }
 
