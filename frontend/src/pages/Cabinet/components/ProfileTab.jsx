@@ -4,6 +4,7 @@ import { useAuth } from "../../../context/AuthContext.jsx";
 import {getCookie} from "../../../utils/cookies.js"
 import Loader from "../../../components/ui/Loader/Loader.jsx";
 import {API_URL} from "../../../shared/api.js";
+import {getCSRF} from "../../../api/csrf.js";
 export default function ProfileTab() {
     const { user, setUser } = useAuth();
     const fileInputRef = useRef(null);
@@ -43,11 +44,12 @@ export default function ProfileTab() {
     };
     const handleDeleteAvatar = async() =>{
         try{
+            const csrfToken = await getCSRF()
             const res = await fetch(`${API_URL}/api/cabinet/avatar/`, {
                 method: "DELETE",
                 credentials:'include',
                 headers:{
-                    "X-CSRFToken": getCookie('csrftoken')
+                    "X-CSRFToken": csrfToken
                 }
             })
             if(!res.ok){
@@ -77,11 +79,12 @@ export default function ProfileTab() {
             formData.append('avatar', avatarFile)
         }
         try{
+            const csrfToken = await getCSRF()
             const res = await fetch(`${API_URL}/api/cabinet/`, {
                 method: "PATCH",
                 credentials:'include',
                 headers:{
-                    "X-CSRFToken": getCookie('csrftoken')
+                    "X-CSRFToken": csrfToken
                 },
                 body:formData
             })
@@ -139,7 +142,7 @@ export default function ProfileTab() {
                     <p className="text-red-500 text-sm">{errors.email[0]}</p>
                 )}
                 <div className="flex flex-col gap-3 pt-4 sm:flex-row">
-                    <Button type="button">Изменить пароль</Button>
+                    {/*<Button type="button">Изменить пароль</Button>*/}
                     <Button type="button" onClick={handleSave}>Сохранить изменения</Button>
                 </div>
                 {errors.detail && (
