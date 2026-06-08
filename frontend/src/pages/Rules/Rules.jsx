@@ -1,3 +1,5 @@
+import NotFound from "../NotFound/NotFound.jsx";
+
 export default function Rules(){
-    return <h2>Rules</h2>
+    return <NotFound/>
 }

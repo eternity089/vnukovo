@@ -1,3 +1,5 @@
+import NotFound from "../NotFound/NotFound.jsx";
+
 export default function History(){
-    return <h2>History</h2>
+    return <NotFound/>
 }
