@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getCookie } from "../utils/cookies.js";
 import {API_URL} from "../shared/api.js";
+import {getCSRF} from "../api/csrf.js";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -25,14 +26,14 @@ export function AuthProvider({ children }) {
             });
     }, []);
     const logout = async () => {
-        const csrftoken = getCookie("csrftoken");
+        const csrfToken = getCSRF();
         console.log(document.cookie);
         console.log(getCookie("csrftoken"));
         await fetch(`${API_URL}/api/logout/`, {
             method: "POST",
             credentials: "include",
             headers: {
-                "X-CSRFToken": csrftoken
+                "X-CSRFToken": csrfToken
             }
         });
         setUser(null);
