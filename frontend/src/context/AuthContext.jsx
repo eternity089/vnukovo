@@ -26,9 +26,7 @@ export function AuthProvider({ children }) {
             });
     }, []);
     const logout = async () => {
-        const csrfToken = getCSRF();
-        console.log(document.cookie);
-        console.log(getCookie("csrftoken"));
+        const csrfToken = await getCSRF();
         await fetch(`${API_URL}/api/logout/`, {
             method: "POST",
             credentials: "include",
