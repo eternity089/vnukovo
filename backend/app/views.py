@@ -21,7 +21,9 @@ from .serializers import *
 @method_decorator(ensure_csrf_cookie, name="dispatch")
 class CSRFAPIView(APIView):
     def get(self, request):
-        return Response({"success": True})
+        return Response({
+            "csrfToken": get_token(request)
+        })
 
 class ReviewListAPIView(ListAPIView):
     queryset = Review.objects.filter(is_published=True)[:6]
