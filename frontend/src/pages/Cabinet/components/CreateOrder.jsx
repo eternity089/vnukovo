@@ -8,6 +8,7 @@ import {ru} from 'date-fns/locale'
 import {Listbox} from '@headlessui/react'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import {API_URL} from "../../../shared/api.js";
+import {getCSRF} from "../../../api/csrf.js";
 
 export default function CreateOrder() {
     const resetForm = () => {
@@ -131,15 +132,13 @@ export default function CreateOrder() {
     };
 
     try {
-         await fetch(`${API_URL}/api/csrf/`, {
-            credentials: "include",
-        });
+        const csrftoken = await getCSRF()
         const res = await fetch(`${API_URL}/api/booking/create/`, {
             method: "POST",
             credentials: "include", // 👈 КРИТИЧНО
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrftoken"),
+                "X-CSRFToken": csrftoken,
             },
             body: JSON.stringify(payload),
         });

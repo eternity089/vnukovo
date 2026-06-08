@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout, authenticate
+from django.middleware.csrf import get_token
 from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -17,6 +18,10 @@ from .serializers import *
 
 
 # Create your views here.
+@api_view['GET']
+def csrf(request):
+    return Response({"csrf_token": get_token(request)})
+
 class ReviewListAPIView(ListAPIView):
     queryset = Review.objects.filter(is_published=True)[:6]
     serializer_class = ReviewSerializer
