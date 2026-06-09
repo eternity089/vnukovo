@@ -454,7 +454,21 @@ export default function CreateOrder() {
                         <p className="text-sm text-gray-500 mb-3">Продолжительность</p>
                         <div className="flex flex-wrap gap-3">
                             {[2, 3, 4].map(hours => (
-                                <button key={hours} type="button" className="px-5 py-2 rounded-xl border hover:border-h">{hours} часа</button>
+                                <button key={hours} type="button"
+                                    onClick={() =>
+                                        setBathData(prev => ({
+                                            ...prev,
+                                            duration: hours
+                                        }))
+                                    }
+                                    className={`px-5 py-2 rounded-xl border transition-all
+                                        ${
+                                            bathData.duration === hours
+                                                ? "bg-h text-white border-h"
+                                                : "hover:border-h border-gray-300"
+                                        }
+                                    `}
+                                >{hours} часа</button>
                             ))}
                         </div>
                     </div>
