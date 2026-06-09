@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import OrderCard from "./OrderCard.jsx";
 import {getCookie} from "../../../utils/cookies.js"
 import {API_URL} from "../../../shared/api.js";
+import {getCSRF} from "../../../api/csrf.js";
 
 
 export default function OrdersTab(){
@@ -15,11 +16,12 @@ export default function OrdersTab(){
     }, []);
     const cancelBooking = async (id) => {
     try {
+        const csrfToken = getCSRF()
         const res = await fetch(`${API_URL}/api/booking/${id}/cancel/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrftoken"),
+                "X-CSRFToken": csrfToken
             },
             credentials: "include",
         });
@@ -39,15 +41,23 @@ export default function OrdersTab(){
         console.error(err);
     }
 };
-    return(
-        <div className="grid gap-5">
-            {orders.map(order => (
-                <OrderCard
-                    key={order.id}
-                    order={order}
-                    onCancel={cancelBooking}
-                />
-            ))}
-        </div>
-    )
+return (
+    <div>
+        {orders.length === 0 ? (
+            <h2 className="text-center text-gray-500 text-lg">
+                У вас пока нет заявок
+            </h2>
+        ) : (
+            <div className="grid gap-5">
+                {orders.map(order => (
+                    <OrderCard
+                        key={order.id}
+                        order={order}
+                        onCancel={cancelBooking}
+                    />
+                ))}
+            </div>
+        )}
+    </div>
+);
 }
