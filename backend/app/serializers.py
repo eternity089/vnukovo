@@ -127,35 +127,26 @@ class BookingCreateSerializer(serializers.ModelSerializer):
                 'Выберите хотя бы один тип бронирования'
             )
 
-        # -------------------------
-        # HOME VALIDATION
-        # -------------------------
         if home_data:
             check_in = home_data.get('check_in')
             check_out = home_data.get('check_out')
-
             if check_in and check_in < timezone.localdate():
                 raise serializers.ValidationError({
                     'home_booking': 'Нельзя выбрать прошедшую дату'
                 })
-
             if check_in and check_out and check_out <= check_in:
                 raise serializers.ValidationError({
                     'home_booking': 'Дата выезда должна быть позже заезда'
                 })
-
             occupied = defaultdict(int)
-
             existing = HomeBooking.objects.filter(
                 booking__status__in=['new', 'confirmed']
             )
-
             for b in existing:
                 d = b.check_in
                 while d < b.check_out:
                     occupied[d] += 1
                     d += timedelta(days=1)
-
             d = check_in
             while d < check_out:
                 if occupied[d] >= 2:
@@ -164,31 +155,38 @@ class BookingCreateSerializer(serializers.ModelSerializer):
                     })
                 d += timedelta(days=1)
 
-        # -------------------------
-        # BATH VALIDATION
-        # -------------------------
         if bath_data:
             start = bath_data.get('check_in')
-
             if start and start < timezone.now():
                 raise serializers.ValidationError({
                     'bath_booking': 'Нельзя выбрать прошедшее время'
                 })
-
-            # duration или программа
             program = bath_data.get('steam_program')
-            duration = program.duration if program else bath_data.get('duration')
-
-            if start and duration:
+            if program:
+                duration = program.duration
+            else:
+                duration = bath_data.get('duration')
+            if not duration:
+                raise serializers.ValidationError({
+                    'bath_booking': 'Не указана продолжительность бани'
+                })
+            duration = int(duration)
+            if start:
                 end = start + timedelta(hours=duration)
-
                 existing = BathBooking.objects.filter(
                     booking__status__in=['new', 'confirmed']
                 )
                 for b in existing:
                     ex_start = b.check_in
-                    ex_duration = b.steam_program.duration if b.steam_program else b.duration
-                    ex_end = ex_start + timedelta(hours=ex_duration)
+                    ex_program = getattr(b, 'steam_program', None)
+                    ex_duration = (
+                        ex_program.duration
+                        if ex_program
+                        else b.duration
+                    )
+                    if not ex_duration:
+                        continue  # защита от битых данных
+                    ex_end = ex_start + timedelta(hours=int(ex_duration))
                     if start < ex_end and end > ex_start:
                         raise serializers.ValidationError({
                             'bath_booking': 'Это время уже занято'
