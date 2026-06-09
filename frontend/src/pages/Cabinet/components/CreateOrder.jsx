@@ -9,6 +9,7 @@ import {Listbox} from '@headlessui/react'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import {API_URL} from "../../../shared/api.js";
 import {getCSRF} from "../../../api/csrf.js";
+import toast from "react-hot-toast";
 
 export default function CreateOrder() {
     const resetForm = () => {
@@ -151,7 +152,7 @@ export default function CreateOrder() {
             return;
         }
 
-        alert("Заявка создана");
+        toast.success("Заявка создана");
 
         resetForm();
         loadAvailability();

@@ -1,8 +1,8 @@
 import Button from "../../../components/ui/Button/Button.jsx";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../context/AuthContext.jsx";
-import {getCookie} from "../../../utils/cookies.js"
 import Loader from "../../../components/ui/Loader/Loader.jsx";
+import toast from 'react-hot-toast'
 import {API_URL} from "../../../shared/api.js";
 import {getCSRF} from "../../../api/csrf.js";
 export default function ProfileTab() {
@@ -53,7 +53,7 @@ export default function ProfileTab() {
                 }
             })
             if(!res.ok){
-                throw new Error("Ошибка удаления")
+                toast.error('Ошибка удаления')
             }
             setPreview(null)
             setAvatarFile(null)
@@ -63,9 +63,7 @@ export default function ProfileTab() {
             }))
         }catch(error){
             console.error(error)
-            setErrors({
-                detail: 'Не удалось удалить фотографию'
-            })
+            toast.error('Не удалось удалить фотографию')
         }
     }
     const handleSave = async () => {
@@ -99,9 +97,7 @@ export default function ProfileTab() {
             }))
         } catch(error){
             console.log(error)
-            setErrors({
-                detail: 'Ошибка соединения с сервером'
-            })
+            toast.error('Ошибка соединения с сервером')
         }
     }
     if (!user) {
