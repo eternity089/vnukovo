@@ -21,6 +21,15 @@ export default function CreateOrder() {
             extra_place: false,
             with_pet: false,
         });
+        setBathData({
+            check_in: "",
+            duration: null,
+            steam_program: null,
+            whisk: "",
+            bath_tub: false,
+            bath_tub_filling: false,
+            steaming: false,
+        })
         setForm({
             comment: ""
         });
@@ -235,6 +244,7 @@ export default function CreateOrder() {
                                     inline
                                     locale={ru}
                                     excludeDates={disabledDates}
+                                    minDate={new Date()}
                                     dayClassName={(date) => {
                                     const dateString = formatDate(date);
                                     if (houseAvailability[dateString] >= 2) {
