@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import OrderCard from "./OrderCard.jsx";
-import {getCookie} from "../../../utils/cookies.js"
 import {API_URL} from "../../../shared/api.js";
 import {getCSRF} from "../../../api/csrf.js";
 
@@ -16,7 +15,7 @@ export default function OrdersTab(){
     }, []);
     const cancelBooking = async (id) => {
     try {
-        const csrfToken = getCSRF()
+        const csrfToken = await getCSRF()
         const res = await fetch(`${API_URL}/api/booking/${id}/cancel/`, {
             method: "POST",
             headers: {

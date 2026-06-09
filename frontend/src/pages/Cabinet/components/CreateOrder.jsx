@@ -142,14 +142,13 @@ export default function CreateOrder() {
     };
 
     try {
-        const csrftoken = await getCSRF()
-        console.log(payload);
+        const csrfToken = await getCSRF()
         const res = await fetch(`${API_URL}/api/booking/create/`, {
             method: "POST",
             credentials: "include", // 👈 КРИТИЧНО
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
+                "X-CSRFToken": csrfToken,
             },
             body: JSON.stringify(payload),
         });
