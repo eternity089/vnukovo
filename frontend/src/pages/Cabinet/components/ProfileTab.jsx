@@ -41,6 +41,7 @@ export default function ProfileTab() {
         setPreview(
             URL.createObjectURL(file)
         );
+        toast.success('Аватар изменен')
     };
     const handleDeleteAvatar = async() =>{
         try{
@@ -65,6 +66,7 @@ export default function ProfileTab() {
             console.error(error)
             toast.error('Не удалось удалить фотографию')
         }
+    toast.success('Аватар удален')
     }
     const handleSave = async () => {
         setErrors({})
@@ -95,6 +97,7 @@ export default function ProfileTab() {
                 ...prev,
                 ...data
             }))
+            toast.success('Изменения сохранены')
         } catch(error){
             console.log(error)
             toast.error('Ошибка соединения с сервером')
