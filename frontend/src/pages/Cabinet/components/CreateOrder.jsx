@@ -461,14 +461,15 @@ export default function CreateOrder() {
                                             duration: hours
                                         }))
                                     }
-                                    className={`px-5 py-2 rounded-xl border transition-all
+                                    className={`px-5 py-2 rounded-xl border transition
                                         ${
                                             bathData.duration === hours
                                                 ? "bg-h text-white border-h"
-                                                : "hover:border-h border-gray-300"
-                                        }
-                                    `}
-                                >{hours} часа</button>
+                                                : "border-gray-300 hover:border-h"
+                                        }`}
+                                >
+                                    {hours} часа
+                                </button>
                             ))}
                         </div>
                     </div>
