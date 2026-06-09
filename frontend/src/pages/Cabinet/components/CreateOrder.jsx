@@ -450,35 +450,23 @@ export default function CreateOrder() {
                             </div>
                         </div>
                     )}
-                    <div>
+                     <div>
                         <p className="text-sm text-gray-500 mb-3">Продолжительность</p>
-                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                {durations.map((bath) => (
-                                    <button key={bath.id} type="button"
-                                        onClick={() =>
-                                            setBathData(prev => ({
-                                                ...prev,
-                                                duration: bath.id
-                                            }))
-                                        }
-                                        className={`
-                                            rounded-xl border p-4 transition-all
-                                            ${
-                                                bathData.duration === bath.id
-                                                    ? "border-orange-500 bg-orange-50 shadow-md"
-                                                    : "border-gray-200 hover:border-orange-300"
-                                            }
-                                        `}
-                                    >
-                                        <div className="text-lg font-semibold">
-                                            {bath.duration} ч.
-                                        </div>
-                                        <div className="text-sm text-gray-500">
-                                            Аренда бани
-                                        </div>
-                                    </button>
-                                ))}
-                            </div>
+                        <div className="flex flex-wrap gap-3">
+                            {[2, 3, 4].map(hours => (
+                                <button
+                                    key={hours}
+                                    type="button"
+                                    className="
+                                        px-5 py-2
+                                        rounded-xl
+                                        border
+                                        hover:border-h
+                                    "
+                                >
+                                    {hours} часа
+                                </button>
+                            ))}
                         </div>
                     <div>
                         <p className="text-sm text-gray-500 mb-3">Программа парения</p>
