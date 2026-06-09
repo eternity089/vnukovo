@@ -284,6 +284,7 @@ export default function CreateOrder() {
                                         selectsRange
                                         monthsShown={1}
                                         inline
+                                        minDate={new Date()}
                                         locale={ru}
                                         excludeDates={disabledDates}
                                         calendarClassName="airbnb-calendar"
@@ -379,7 +380,7 @@ export default function CreateOrder() {
                             <div className="absolute z-50 mt-3 bg-white border border-border/30 rounded-2xl shadow-xl p-4">
                                 <div className="flex gap-6">
                                     {/* LEFT: CALENDAR */}
-                                    <DatePicker selected={bathDateTime}
+                                    <DatePicker selected={bathDateTime} minDate={new Date()}
                                         onChange={(date) => {
                                             setBathDateTime(date);
                                             setBathData(prev => ({
@@ -424,7 +425,7 @@ export default function CreateOrder() {
                             </div>
                             <div className="flex-1 overflow-y-auto flex flex-col items-center p-4 gap-6 min-h-0">
                                 {/* календарь */}
-                                <DatePicker
+                                <DatePicker minDate={new Date()}
                                     selected={bathDateTime}
                                     onChange={(date) => {
                                         setBathDateTime(date);
