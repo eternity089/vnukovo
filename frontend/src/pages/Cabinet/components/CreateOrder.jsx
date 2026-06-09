@@ -133,6 +133,7 @@ export default function CreateOrder() {
 
     try {
         const csrftoken = await getCSRF()
+        console.log(payload);
         const res = await fetch(`${API_URL}/api/booking/create/`, {
             method: "POST",
             credentials: "include", // 👈 КРИТИЧНО
