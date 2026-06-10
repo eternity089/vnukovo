@@ -71,7 +71,7 @@ export default function OrderCard({
     toast.success("Спасибо за отзыв!");
 };
     return (
-        <article className="bg-white w-[30%] border border-border rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+        <article className="bg-white w-[32%] border border-border rounded-2xl p-6 shadow-sm flex flex-col gap-5">
             {/* HEADER */}
             <div className="flex justify-between items-start gap-4">
                 <div>
