@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 export default function OrderCard({
     order,
     onCancel,
-    onReview
 }) {
     const statusMap = {
         new: {
@@ -62,9 +61,16 @@ export default function OrderCard({
     });
 
     const data = await res.json();
-
+    if (!rating) {
+        toast.error("Поставьте оценку");
+        return;
+    }
     if (!res.ok) {
-        toast.error(data.detail);
+        console.log(data);
+        const msg =
+            data.detail ||
+            Object.values(data).flat().join(", ");
+        toast.error(msg);
         return;
     }
 
@@ -193,12 +199,12 @@ export default function OrderCard({
                             <textarea
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
-                                className="w-full border rounded-xl p-3 w-full"
+                                className="w-full border rounded-xl p-3"
                                 rows={4}
                                 placeholder="Поделитесь впечатлениями..."
                             />
                         </div>
-                        <Button classname='mt-3' onClick={() => onReview(order)}>Оставить отзыв</Button>
+                        <Button classname='mt-3' onClick={() => submitReview(order.id)}>Оставить отзыв</Button>
                     </div>
                 )}
             </div>
