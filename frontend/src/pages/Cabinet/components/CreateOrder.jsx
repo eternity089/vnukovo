@@ -12,6 +12,22 @@ import {getCSRF} from "../../../api/csrf.js";
 import toast from "react-hot-toast";
 
 export default function CreateOrder() {
+    const showErrors = (obj) => {
+        const extract = (value) => {
+            if (typeof value === "string") {
+                toast.error(value);
+                return;
+            }
+            if (Array.isArray(value)) {
+                value.forEach(extract);
+                return;
+            }
+            if (typeof value === "object" && value !== null) {
+                Object.values(value).forEach(extract);
+            }
+        };
+        extract(obj);
+    };
     const resetForm = () => {
         setDateRange([null, null]);
         setGuests(2);
@@ -114,7 +130,7 @@ export default function CreateOrder() {
         fetch(`${API_URL}/api/bath-programs/`)
             .then(res => res.json())
             .then(data => setBathPrograms(data))
-            .catch(err => toast.error(err))
+            .catch(err => console.log(err))
     }, []);
   const handleSubmit = async () => {
     const payload = {
@@ -156,7 +172,7 @@ export default function CreateOrder() {
         const data = await res.json();
 
         if (!res.ok) {
-            toast.error(data);
+            showErrors( data);
             return;
         }
 
