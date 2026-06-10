@@ -189,6 +189,7 @@ export default function OrderCard({
                                     {star <= rating ? "⭐" : "☆"}
                                 </button>
                            ))}
+                        </div>
                             <textarea
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
@@ -196,7 +197,6 @@ export default function OrderCard({
                                 rows={4}
                                 placeholder="Поделитесь впечатлениями..."
                             />
-                        </div>
                         </div>
                         <Button onClick={() => onReview(order)}>Оставить отзыв</Button>
                     </div>
