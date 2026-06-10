@@ -124,19 +124,23 @@ export default function ProfileTab() {
             </div>
             {/* USER DATA */}
             <div className="flex-1 flex flex-col gap-4">
-                <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Имя" className={`input ${errors.name ? "border-red-500" : ""}`}/>
+                <input type="text" name="name" value={form.name} onChange={handleChange}
+                       placeholder="Имя" className={`input ${errors.name ? "border-red-500" : ""}`}/>
                 {errors.name && (
                     <p className="text-red-500 text-sm">{errors.name[0]}</p>
                 )}
-                <input type="text" name="surname" value={form.surname} onChange={handleChange} placeholder="Фамилия" className={`input ${errors.surname ? "border-red-500" : ""}`}/>
+                <input type="text" name="surname" value={form.surname} onChange={handleChange}
+                       placeholder="Фамилия" className={`input ${errors.surname ? "border-red-500" : ""}`}/>
                 {errors.surname && (
                     <p className="text-red-500 text-sm">{errors.surname[0]}</p>
                 )}
-                <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="Телефон" className={`input ${errors.phone ? "border-red-500" : ""}`}/>
+                <input type="tel" name="phone" value={form.phone} onChange={handleChange}
+                       placeholder="Телефон" className={`input ${errors.phone ? "border-red-500" : ""}`}/>
                 {errors.phone && (
                     <p className="text-red-500 text-sm">{errors.phone[0]}</p>
                 )}
-                <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Электронная почта" className={`input ${errors.email ? "border-red-500" : ""}`}/>
+                <input type="email" name="email" value={form.email} onChange={handleChange}
+                       placeholder="Электронная почта" className={`input ${errors.email ? "border-red-500" : ""}`}/>
                 {errors.email && (
                     <p className="text-red-500 text-sm">{errors.email[0]}</p>
                 )}

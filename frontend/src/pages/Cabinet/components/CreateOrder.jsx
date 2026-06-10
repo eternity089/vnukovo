@@ -238,9 +238,7 @@ export default function CreateOrder() {
           {bookingType.house && (
             <section className="rounded-2xl border border-input/20 p-6 flex flex-col gap-5 w-full">
                 <h3 className="text-input text-2xl font-medium">Домик</h3>
-                {/* LAYOUT: CALENDAR + FORM */}
                 <div className="flex flex-col lg:flex-row w-full gap-6">
-                    {/* календарь */}
                     <div className="lg:w-2/6 shrink-0 relative">
                         <button type="button" onClick={() => setOpenCalendar(prev => !prev)}
                             className="w-full border border-input/20 rounded-xl p-3 text-left text-md text-input hover:border-h transition">
