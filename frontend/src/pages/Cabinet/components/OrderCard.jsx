@@ -8,6 +8,7 @@ export default function OrderCard({
     order,
     onCancel,
 }) {
+
     const statusMap = {
         new: {
             label: "Новая",
@@ -44,36 +45,40 @@ export default function OrderCard({
 
     const [rating, setRating] = useState(0);
     const [text, setText] = useState("");
+    const [reviewSent, setReviewSent] = useState(
+        !!order.bookingReview
+    );
+
     const submitReview = async (bookingId) => {
-    const csrftoken = await getCSRF();
-
-    const res = await fetch(`${API_URL}/api/bookings/${bookingId}/review/`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrftoken,
-        },
-        body: JSON.stringify({
-            rating,
-            text,
-        }),
-    });
-
-    const data = await res.json();
     if (!rating) {
         toast.error("Поставьте оценку");
         return;
     }
+    const csrfToken = await getCSRF();
+    const res = await fetch(
+        `${API_URL}/api/bookings/${bookingId}/review/`,
+        {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+            },
+            body: JSON.stringify({
+                rating,
+                text,
+            }),
+        }
+    );
+    const data = await res.json();
     if (!res.ok) {
-        console.log(data);
-        const msg =
+        toast.error(
             data.detail ||
-            Object.values(data).flat().join(", ");
-        toast.error(msg);
+            Object.values(data).flat().join(", ")
+        );
         return;
     }
-
+    setReviewSent(true);
     toast.success("Спасибо за отзыв!");
 };
     return (
@@ -181,31 +186,55 @@ export default function OrderCard({
                     <Button classname="bg-red-500 hover:bg-red-600 text-white" onClick={() => onCancel(order.id)}>Отменить заявку</Button>
                 )}
                 {order.status === "completed" && (
-                    <div className='flex flex-col w-full'>
-                        <div className='flex flex-col'>
-                            <div className="flex gap-1">
-                                <p>Оценка посещения:</p>
+                    reviewSent ? (
+                        <div className="w-full rounded-xl bg-green-50 border border-green-200 p-4">
+                            <div className="flex gap-1 mb-2">
                                 {[1, 2, 3, 4, 5].map((star) => (
-                                    <span key={star} onClick={() => setRating(star)}
-                                        className={`
-                                            text-2xl cursor-pointer transition-colors
-                                            ${star <= rating ? "text-yellow-400" : "text-gray-300"}
-                                        `}
+                                    <span
+                                        key={star}
+                                        className={
+                                            star <= (
+                                                order.bookingReview?.rating ?? rating
+                                            )
+                                                ? "text-yellow-400 text-2xl"
+                                                : "text-gray-300 text-2xl"
+                                        }
                                     >
                                         ★
                                     </span>
                                 ))}
                             </div>
-                            <textarea
-                                value={text}
-                                onChange={(e) => setText(e.target.value)}
-                                className="w-full border rounded-xl p-3"
-                                rows={4}
-                                placeholder="Поделитесь впечатлениями..."
-                            />
+                            <p className="text-sm text-gray-700">{order.bookingReview?.text ?? text}</p>
+                            <p className="text-xs text-gray-500 mt-2">Спасибо за ваш отзыв!</p>
                         </div>
-                        <Button classname='mt-3' onClick={() => submitReview(order.id)}>Оставить отзыв</Button>
-                    </div>
+                    ) : (
+                        <div className="flex flex-col w-full">
+                            <div className="flex flex-col">
+                                <div className="flex gap-1 items-center">
+                                    <p>Оценка посещения:</p>
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <span
+                                            key={star}
+                                            onClick={() => setRating(star)}
+                                            className={`
+                                                text-2xl cursor-pointer transition-colors
+                                                ${
+                                                    star <= rating
+                                                        ? "text-yellow-400"
+                                                        : "text-gray-300"
+                                                }
+                                            `}
+                                        >
+                                            ★
+                                        </span>
+                                    ))}
+                                </div>
+                                <textarea value={text} onChange={(e) => setText(e.target.value)} className="w-full border rounded-xl p-3 mt-2" rows={4} placeholder="Поделитесь впечатлениями..."
+                                />
+                            </div>
+                            <Button classname="mt-3" onClick={() => submitReview(order.id)}>Оставить отзыв</Button>
+                        </div>
+                    )
                 )}
             </div>
         </article>

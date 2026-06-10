@@ -209,7 +209,13 @@ class BookingCreateSerializer(serializers.ModelSerializer):
             BathBooking.objects.create(booking=booking, **bath_data)
         return booking
 
+class ReviewShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ["rating", "text", "created_at"]
+
 class UserBookingSerializer(serializers.ModelSerializer):
+    bookingReview = ReviewShortSerializer(read_only=True)
     home_booking= HomeBookingSerializer(read_only=True, allow_null=True)
     bath_booking= BathBookingSerializer(read_only=True, allow_null=True)
     class Meta:
@@ -220,7 +226,8 @@ class UserBookingSerializer(serializers.ModelSerializer):
             'comment',
             'created_at',
             'home_booking',
-            'bath_booking'
+            'bath_booking',
+            'bookingReview',
         ]
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
