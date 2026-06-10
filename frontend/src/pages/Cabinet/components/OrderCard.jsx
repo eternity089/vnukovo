@@ -175,7 +175,7 @@ export default function OrderCard({
                     <Button classname="bg-red-500 hover:bg-red-600 text-white" onClick={() => onCancel(order.id)}>Отменить заявку</Button>
                 )}
                 {order.status === "completed" && (
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col w-full'>
                         <div className='flex flex-col'>
                             <div className="flex gap-1">
                                 <p>Оценка посещения:</p>
@@ -193,12 +193,12 @@ export default function OrderCard({
                             <textarea
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
-                                className="w-full border rounded-xl p-3"
+                                className="w-full border rounded-xl p-3 w-full"
                                 rows={4}
                                 placeholder="Поделитесь впечатлениями..."
                             />
                         </div>
-                        <Button onClick={() => onReview(order)}>Оставить отзыв</Button>
+                        <Button classname='mt-3' onClick={() => onReview(order)}>Оставить отзыв</Button>
                     </div>
                 )}
             </div>
