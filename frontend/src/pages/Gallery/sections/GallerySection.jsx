@@ -11,7 +11,7 @@ export default function GallerySection(){
             .then(data => setImages(data))
     }, []);
     return(
-        <Container>
+        <Container className='min-h-[70vh]'>
             <div className="mx-auto">
                 <h2>Галерея</h2>
                 <div className="flex flex-wrap gap-5 my-10">

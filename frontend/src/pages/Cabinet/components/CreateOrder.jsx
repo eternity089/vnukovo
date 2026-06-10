@@ -114,7 +114,7 @@ export default function CreateOrder() {
         fetch(`${API_URL}/api/bath-programs/`)
             .then(res => res.json())
             .then(data => setBathPrograms(data))
-            .catch(err => console.log(err))
+            .catch(err => toast.error(err))
     }, []);
   const handleSubmit = async () => {
     const payload = {
@@ -156,7 +156,7 @@ export default function CreateOrder() {
         const data = await res.json();
 
         if (!res.ok) {
-            console.log("booking error:", data);
+            toast.error(data);
             return;
         }
 
