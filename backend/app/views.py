@@ -254,3 +254,37 @@ class CancelBookingAPIView(APIView):
         booking.status = 'canceled'
         booking.save()
         return Response({'message':'Заявка отменена'})
+
+class CreateReviewAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request, booking_id):
+        try:
+            booking = Booking.objects.get(
+                id=booking_id,
+                user=request.user
+            )
+        except Booking.DoesNotExist:
+            return Response(
+                {"detail": "Заявка не найдена"},
+                status=404
+            )
+        if booking.status != "completed":
+            return Response(
+                {"detail": "Отзыв можно оставить только после завершения бронирования"},
+                status=400
+            )
+        if hasattr(booking, "bookingReview"):
+            return Response(
+                {"detail": "Отзыв уже существует"},
+                status=400
+            )
+        serializer = ReviewCreateSerializer(
+            data=request.data,
+            context={
+                "request": request,
+                "booking": booking
+            }
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"success": True})

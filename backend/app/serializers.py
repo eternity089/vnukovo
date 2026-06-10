@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from django.utils import timezone
 from rest_framework import serializers
-from app.models import *
+from .models import *
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -222,3 +222,18 @@ class UserBookingSerializer(serializers.ModelSerializer):
             'home_booking',
             'bath_booking'
         ]
+
+class ReviewCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ["rating", "text"]
+
+    def create(self, validated_data):
+        booking = self.context["booking"]
+        user = self.context["request"].user
+
+        return Review.objects.create(
+            booking=booking,
+            user=user,
+            **validated_data
+        )
