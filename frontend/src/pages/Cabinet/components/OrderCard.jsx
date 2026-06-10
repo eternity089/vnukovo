@@ -175,8 +175,10 @@ export default function OrderCard({
                     <Button classname="bg-red-500 hover:bg-red-600 text-white" onClick={() => onCancel(order.id)}>Отменить заявку</Button>
                 )}
                 {order.status === "completed" && (
-                    <>
+                    <div className='flex flex-col'>
+                        <div className='flex flex-col'>
                         <div className="flex gap-1">
+                            <p>Оценка посещения:</p>
                            {[1, 2, 3, 4, 5].map(star => (
                                 <button
                                     key={star}
@@ -195,8 +197,9 @@ export default function OrderCard({
                                 placeholder="Поделитесь впечатлениями..."
                             />
                         </div>
+                        </div>
                         <Button onClick={() => onReview(order)}>Оставить отзыв</Button>
-                    </>
+                    </div>
                 )}
             </div>
         </article>
