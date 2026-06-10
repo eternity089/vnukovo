@@ -199,7 +199,7 @@ class BookingCreateAPIView(APIView):
     def post(self, request):
         serializer = BookingCreateSerializer(data=request.data, context={'request': request})
         if not serializer.is_valid():
-            print(serializer.errors)  # ← ВАЖНО
+            print(serializer.errors)
             return Response(serializer.errors, status=400)
         booking = serializer.save()
         return Response({
