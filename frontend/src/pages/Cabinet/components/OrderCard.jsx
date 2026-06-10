@@ -1,4 +1,8 @@
 import Button from "../../../components/ui/Button/Button.jsx";
+import {API_URL} from "../../../shared/api.js";
+import {useState} from "react";
+import {getCSRF} from "../../../api/csrf.js";
+import toast from "react-hot-toast";
 
 export default function OrderCard({
     order,
@@ -26,7 +30,6 @@ export default function OrderCard({
     const status = statusMap[order.status];
     const formatDate = (date) => {
         if (!date) return "";
-
         return new Date(date).toLocaleDateString("ru-RU");
     };
     const formatDateTime = (date) => {
@@ -39,6 +42,34 @@ export default function OrderCard({
             minute: "2-digit",
         });
     };
+
+    const [rating, setRating] = useState(0);
+    const [text, setText] = useState("");
+    const submitReview = async (bookingId) => {
+    const csrftoken = await getCSRF();
+
+    const res = await fetch(`${API_URL}/api/bookings/${bookingId}/review/`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+        },
+        body: JSON.stringify({
+            rating,
+            text,
+        }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        toast.error(data.detail);
+        return;
+    }
+
+    toast.success("Спасибо за отзыв!");
+};
     return (
         <article className="bg-white border border-border rounded-2xl p-6 shadow-sm flex flex-col gap-5">
             {/* HEADER */}
@@ -144,11 +175,30 @@ export default function OrderCard({
                     <Button classname="bg-red-500 hover:bg-red-600 text-white" onClick={() => onCancel(order.id)}>Отменить заявку</Button>
                 )}
                 {order.status === "completed" && (
-                    <Button onClick={() => onReview(order)}>Оставить отзыв</Button>
+                    <>
+                        <div className="flex gap-1">
+                           {[1, 2, 3, 4, 5].map(star => (
+                                <button
+                                    key={star}
+                                    type="button"
+                                    onClick={() => setRating(star)}
+                                    className="text-3xl"
+                                >
+                                    {star <= rating ? "⭐" : "☆"}
+                                </button>
+                           ))}
+                            <textarea
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
+                                className="w-full border rounded-xl p-3"
+                                rows={4}
+                                placeholder="Поделитесь впечатлениями..."
+                            />
+                        </div>
+                        <Button onClick={() => onReview(order)}>Оставить отзыв</Button>
+                    </>
                 )}
-
             </div>
-
         </article>
     );
 }
