@@ -71,7 +71,7 @@ export default function OrderCard({
     toast.success("Спасибо за отзыв!");
 };
     return (
-        <article className="bg-white border border-border rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+        <article className="bg-white w-1/3 border border-border rounded-2xl p-6 shadow-sm flex flex-col gap-5">
             {/* HEADER */}
             <div className="flex justify-between items-start gap-4">
                 <div>
@@ -177,19 +177,19 @@ export default function OrderCard({
                 {order.status === "completed" && (
                     <div className='flex flex-col'>
                         <div className='flex flex-col'>
-                        <div className="flex gap-1">
-                            <p>Оценка посещения:</p>
-                           {[1, 2, 3, 4, 5].map(star => (
-                                <button
-                                    key={star}
-                                    type="button"
-                                    onClick={() => setRating(star)}
-                                    className="text-3xl"
-                                >
-                                    {star <= rating ? "⭐" : "☆"}
-                                </button>
-                           ))}
-                        </div>
+                            <div className="flex gap-1">
+                                <p>Оценка посещения:</p>
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <span key={star} onClick={() => setRating(star)}
+                                        className={`
+                                            text-2xl cursor-pointer transition-colors
+                                            ${star <= rating ? "text-yellow-400" : "text-gray-300"}
+                                        `}
+                                    >
+                                        ★
+                                    </span>
+                                ))}
+                            </div>
                             <textarea
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}

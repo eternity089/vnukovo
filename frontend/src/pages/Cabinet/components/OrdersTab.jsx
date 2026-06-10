@@ -47,7 +47,7 @@ return (
                 У вас пока нет заявок
             </h2>
         ) : (
-            <div className="grid gap-5">
+            <div className="flex flex-wrap gap-5">
                 {orders.map(order => (
                     <OrderCard
                         key={order.id}
