@@ -1,4 +1,3 @@
-import defaultAvatar from "../../../assets/img/"
 
 export default function Review({
     user_name,
