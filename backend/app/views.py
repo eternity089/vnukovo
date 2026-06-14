@@ -87,10 +87,6 @@ class ServicePriceAPIView(APIView):
             }
         ]
         return Response(result)
-class BathTimeUpdateAPIView(UpdateAPIView):
-    queryset = BathTime.objects.all()
-    serializer_class = BathTimeSerializer
-
 
 class GalleryListAPIView(ListAPIView):
     queryset = Gallery.objects.all()[:9]
