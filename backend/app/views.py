@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -39,23 +39,31 @@ class ServicePriceAPIView(APIView):
                     {
                         "title": "По времени",
                         "options": [
-                            {"text": item.text}
+                            {
+                                'id': item.id,
+                                'text': item.text,
+                            }
                             for item in BathTime.objects.all()
                         ]
                     },
                     {
                         "title": "Купель",
                         "options": [
-                            {"text": item.text}
+                            {
+                                'id': item.id,
+                                'text': item.text,
+                            }
                             for item in BathCup.objects.all()
                         ]
                     },
                     {
                         "title": "Услуги",
                         "options": [
-                            {"text": item.text,
-                             "modal": "program" if "рограмм" in item.text else None
-                             }
+                            {
+                                'id': item.id,
+                                "text": item.text,
+                                "modal": item.modal
+                            }
                             for item in BathOption.objects.all()
                         ]
                     },
@@ -68,7 +76,10 @@ class ServicePriceAPIView(APIView):
                     {
                         "title": "Аренда",
                         "options": [
-                            {"text": item.text}
+                            {
+                                'id': item.id,
+                                "text": item.text
+                            }
                             for item in HomePrice.objects.all()
                         ]
                     }
@@ -76,6 +87,10 @@ class ServicePriceAPIView(APIView):
             }
         ]
         return Response(result)
+class BathTimeUpdateAPIView(UpdateAPIView):
+    queryset = BathTime.objects.all()
+    serializer_class = BathTimeSerializer
+
 
 class GalleryListAPIView(ListAPIView):
     queryset = Gallery.objects.all()[:9]
