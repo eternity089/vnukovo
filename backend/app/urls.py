@@ -27,8 +27,8 @@ urlpatterns = [
     path('bookings/', UserBookingsAPIView.as_view(), name='bookings'),
     path('booking/<int:pk>/cancel/',CancelBookingAPIView.as_view(), name='cancel'),
     path('bookings/<int:booking_id>/review/', CreateReviewAPIView.as_view(), name='create_review'),
-    path('bath_time/<int:pk>', BathTimeUpdateAPIView.as_view(), name='update_time'),
-    path('bath_cup/<int:pk>', BathCupUpdateAPIView.as_view(), name='update_cup'),
-    path('bath_option/<int:pk>', BathOptionUpdateAPIView.as_view(), name='update_option'),
-    path('home_price/<int:pk>', HomePriceUpdateAPIView.as_view(), name='update_price'),
+    path('bath_time/<int:pk>/', BathTimeUpdateAPIView.as_view(), name='update_time'),
+    path('bath_cup/<int:pk>/', BathCupUpdateAPIView.as_view(), name='update_cup'),
+    path('bath_option/<int:pk>/', BathOptionUpdateAPIView.as_view(), name='update_option'),
+    path('home_price/<int:pk>/', HomePriceUpdateAPIView.as_view(), name='update_price'),
 ]
