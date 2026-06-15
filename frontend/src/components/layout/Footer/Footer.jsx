@@ -39,7 +39,7 @@ export default function Footer(){
                             <div className="absolute h-px w-0 -bottom-2 bg-white transition-all duration-300 group-hover:w-full"></div>
                         </a>
                         <Link to={'privacy_police'}>Политика конфиденциальности</Link>
-                        <Link to={'privacy_agreement'}>Политика конфиденциальности</Link>
+                        <Link to={'privacy_agreement'}>Пользовательское соглашение</Link>
                         <span className="text-sm text-white"> © Хутор Внуково, 2026</span>
                     </div>
                 </div>
