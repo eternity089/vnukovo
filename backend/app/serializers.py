@@ -42,8 +42,6 @@ class GallerySerializer(serializers.ModelSerializer):
         model = Gallery
         fields = ['id', 'title', 'image']
 
-
-
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -244,3 +242,23 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
             user=user,
             **validated_data
         )
+
+class BathTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BathTime
+        fields = '__all__'
+
+class BathCupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BathCup
+        fields = "__all__"
+
+class BathOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BathOption
+        fields = "__all__"
+
+class HomePriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HomePrice
+        fields = "__all__"

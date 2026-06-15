@@ -2,6 +2,7 @@ import {useState} from "react";
 import toast from "react-hot-toast";
 import Loader from "../../../components/ui/Loader/Loader.jsx";
 import {API_URL} from "../../../shared/api.js";
+import {SERVICE_ENDPOINTS} from "../../../api/endpoints.js";
 
 export default function ServicePriceOptions({
     title,
@@ -19,8 +20,9 @@ export default function ServicePriceOptions({
     const save = async (item) => {
         try {
             setLoading(true);
+            const endpoint = SERVICE_ENDPOINTS[item.type];
             const response = await fetch(
-                `${API_URL}/api/service-price-option/${item.id}/`,
+                `${API_URL}/api/${endpoint}/${item.id}/`,
                 {
                     method: "PATCH",
                     headers: {
@@ -31,10 +33,7 @@ export default function ServicePriceOptions({
                     }),
                 }
             );
-            if (!response.ok) {
-                throw new Error();
-            }
-            item.text = value;
+            if (!response.ok) throw new Error();
             toast.success("Сохранено");
             setEditingId(null);
         } catch {

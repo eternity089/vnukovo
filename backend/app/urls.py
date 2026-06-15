@@ -1,6 +1,13 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
 from .views import *
+
+router = DefaultRouter()
+router.register(r'bath-time', BathTimeViewSet)
+router.register(r'bath-cup', BathCupViewSet)
+router.register(r'bath-option', BathOptionViewSet)
+router.register(r'home-price', HomePriceViewSet)
 
 urlpatterns = [
     path("csrf/", CSRFAPIView.as_view(), name="csrf"),
@@ -20,4 +27,8 @@ urlpatterns = [
     path('bookings/', UserBookingsAPIView.as_view(), name='bookings'),
     path('booking/<int:pk>/cancel/',CancelBookingAPIView.as_view(), name='cancel'),
     path('bookings/<int:booking_id>/review/', CreateReviewAPIView.as_view(), name='create_review'),
+    path('api/bath-time/<int:pk>', BathTimeUpdateAPIView.as_view(), name='update_time'),
+    path('api/bath-cup/<int:pk>', BathCupUpdateAPIView.as_view(), name='update_cup'),
+    path('api/bath-option/<int:pk>', BathOptionUpdateAPIView.as_view(), name='update_option'),
+    path('api/home-price/<int:pk>', HomePriceUpdateAPIView.as_view(), name='update_price'),
 ]

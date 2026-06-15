@@ -6,11 +6,13 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListAPIView, UpdateAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from collections import defaultdict
 from datetime import timedelta
+
+from rest_framework.viewsets import ModelViewSet
 
 from .forms import UserRegisterForm
 from .models import *
@@ -42,6 +44,7 @@ class ServicePriceAPIView(APIView):
                             {
                                 'id': item.id,
                                 'text': item.text,
+                                "type": "bath_time"
                             }
                             for item in BathTime.objects.all()
                         ]
@@ -52,6 +55,7 @@ class ServicePriceAPIView(APIView):
                             {
                                 'id': item.id,
                                 'text': item.text,
+                                "type": "bath_cup"
                             }
                             for item in BathCup.objects.all()
                         ]
@@ -62,7 +66,8 @@ class ServicePriceAPIView(APIView):
                             {
                                 'id': item.id,
                                 "text": item.text,
-                                "modal": item.modal
+                                "modal": item.modal,
+                                "type": "bath_option"
                             }
                             for item in BathOption.objects.all()
                         ]
@@ -78,7 +83,8 @@ class ServicePriceAPIView(APIView):
                         "options": [
                             {
                                 'id': item.id,
-                                "text": item.text
+                                "text": item.text,
+                                "type": "home_price"
                             }
                             for item in HomePrice.objects.all()
                         ]
@@ -97,6 +103,54 @@ class BathProgramAPIView(APIView):
         programs = BathProgram.objects.filter(is_active=True)
         serializer = BathProgramSerializer(programs, many=True)
         return Response(serializer.data)
+
+class BathTimeUpdateAPIView(APIView):
+    def patch(self, request, pk):
+        item = BathTime.objects.get(pk=pk)
+        item.text = request.data.get("text", item.text)
+        item.save()
+        return Response({'id': item.id, 'text': item.text})
+
+class BathTimeViewSet(ModelViewSet):
+    queryset = BathTime.objects.all()
+    serializer_class = BathTimeSerializer
+    permission_classes = [IsAdminUser]
+
+class BathCupUpdateAPIView(APIView):
+    def patch(self, request, pk):
+        item = BathCup.objects.get(pk=pk)
+        item.text = request.data.get("text", item.text)
+        item.save()
+        return Response({'id': item.id, 'text': item.text})
+
+class BathCupViewSet(ModelViewSet):
+    queryset = BathCup.objects.all()
+    serializer_class = BathCupSerializer
+    permission_classes = [IsAdminUser]
+
+class BathOptionUpdateAPIView(APIView):
+    def patch(self, request, pk):
+        item = BathOption.objects.get(pk=pk)
+        item.text = request.data.get("text", item.text)
+        item.save()
+        return Response({'id': item.id, 'text': item.text})
+
+class BathOptionViewSet(ModelViewSet):
+    queryset = BathOption.objects.all()
+    serializer_class = BathOptionSerializer
+    permission_classes = [IsAdminUser]
+
+class HomePriceUpdateAPIView(APIView):
+    def patch(self, request, pk):
+        item = HomePrice.objects.get(pk=pk)
+        item.text = request.data.get("text", item.text)
+        item.save()
+        return Response({'id': item.id, 'text': item.text})
+
+class HomePriceViewSet(ModelViewSet):
+    queryset = HomePrice.objects.all()
+    serializer_class = HomePriceSerializer
+    permission_classes = [IsAdminUser]
 
 class RegisterAPIView(APIView):
     def post(self, request):
