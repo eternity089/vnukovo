@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import toast from "react-hot-toast";
+import {getCSRF} from "../../../api/csrf.js";
 
 export default function EditableField({
     value,
@@ -23,6 +24,11 @@ export default function EditableField({
     }, [editing]);
 
     const save = async () => {
+        if (!endpoint) {
+            toast.error("Нет endpoint");
+            return;
+        }
+
         if (text === value) {
             setEditing(false);
             return;
@@ -31,22 +37,30 @@ export default function EditableField({
         try {
             setLoading(true);
 
+            const csrftoken = await getCSRF();
+
             const res = await fetch(endpoint, {
                 method: "PATCH",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken,
                 },
                 body: JSON.stringify({
                     [field]: text,
                 }),
             });
 
-            if (!res.ok) throw new Error();
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data?.detail || "error");
+            }
 
             toast.success("Сохранено");
             setEditing(false);
 
-        } catch {
+        } catch (e) {
             toast.error("Ошибка сохранения");
         } finally {
             setLoading(false);
@@ -54,9 +68,7 @@ export default function EditableField({
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-            save();
-        }
+        if (e.key === "Enter") save();
         if (e.key === "Escape") {
             setText(value);
             setEditing(false);
@@ -87,7 +99,6 @@ export default function EditableField({
                 </span>
             )}
 
-            {/* subtle edit hint like Notion */}
             <span className="ml-2 opacity-0 group-hover:opacity-50 text-xs">
                 ✏️
             </span>

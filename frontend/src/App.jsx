@@ -9,7 +9,7 @@ import {useEffect} from "react";
 export default function App() {
     const { loading } = useAuth();
     if (loading) {return <Loader />;}
-    const router = createAppRouter();
+    const router = createAppRouter(user, loading);
     useEffect(() => {
     fetch(`${API_URL}/api/csrf/`, {
         credentials: "include",
