@@ -10,6 +10,7 @@ import Gallery from "../pages/Gallery/Gallery.jsx";
 import Contacts from "../pages/Contacts/Contacts.jsx";
 import Rules from "../pages/Rules/Rules.jsx";
 import NotFound from "../pages/NotFound/NotFound.jsx";
+import PrivacyPolicy from "../pages/Documentation/PrivacyPolicy.jsx";
 
 export const createAppRouter = (user, loading) =>
     createBrowserRouter([
@@ -24,6 +25,7 @@ export const createAppRouter = (user, loading) =>
                 { path: 'gallery', element: <Gallery />},
                 { path: 'contacts', element: <Contacts />},
                 { path: 'rules', element: <Rules />},
+                {path: 'privacy_policy', element: <PrivacyPolicy/>},
                 {
                     path: "cabinet",
                   element: (
