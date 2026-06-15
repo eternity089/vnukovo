@@ -7,8 +7,8 @@ import {API_URL} from "./shared/api.js";
 import {useEffect} from "react";
 
 export default function App() {
-    if (loading) {return <Loader />;}
     const { user, loading } = useAuth();
+    if (loading) {return <Loader />;}
     const router = useMemo(
         () => createAppRouter(user, loading),
         [user, loading]
