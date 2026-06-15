@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
         <main className="py-10 lg:py-20">
             <Container>
                 <div className="max-w-5xl mx-auto space-y-8 text-body"> <h1 className="text-4xl font-semibold text-h">
-                    Политика конфиденциальности персональных данных </h1>
+                    Политика обработки персональных данных </h1>
                     <section>
                         <h2 className="text-2xl font-semibold text-h mb-4">
                             1. Общие положения

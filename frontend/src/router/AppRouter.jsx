@@ -11,6 +11,7 @@ import Contacts from "../pages/Contacts/Contacts.jsx";
 import Rules from "../pages/Rules/Rules.jsx";
 import NotFound from "../pages/NotFound/NotFound.jsx";
 import PrivacyPolicy from "../pages/Documentation/PrivacyPolicy.jsx";
+import PersonalDataConsent from "../pages/Documentation/PrivacyAgreement.js";
 
 export const createAppRouter = (user, loading) =>
     createBrowserRouter([
@@ -26,6 +27,7 @@ export const createAppRouter = (user, loading) =>
                 { path: 'contacts', element: <Contacts />},
                 { path: 'rules', element: <Rules />},
                 {path: 'privacy_policy', element: <PrivacyPolicy/>},
+                {path: 'privacy_agreement', element: <PersonalDataConsent/>},
                 {
                     path: "cabinet",
                   element: (
