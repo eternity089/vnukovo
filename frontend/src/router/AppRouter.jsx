@@ -11,7 +11,7 @@ import Contacts from "../pages/Contacts/Contacts.jsx";
 import Rules from "../pages/Rules/Rules.jsx";
 import NotFound from "../pages/NotFound/NotFound.jsx";
 import PrivacyPolicy from "../pages/Documentation/PrivacyPolicy.jsx";
-import PersonalDataConsent from "../pages/Documentation/PrivacyAgreement.js";
+import PersonalDataConsent from "../pages/Documentation/PrivacyAgreement.jsx";
 
 export const createAppRouter = (user, loading) =>
     createBrowserRouter([
