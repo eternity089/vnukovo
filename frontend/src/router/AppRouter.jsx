@@ -19,7 +19,7 @@ export const createAppRouter = (user, loading) =>
 
             children: [
                 { index: true, element: <Home />},
-                { path: 'services', element: <Services />},
+                { path: 'services', element: <Services user={user}/>},
                 { path: 'history', element: <History />},
                 { path: 'gallery', element: <Gallery />},
                 { path: 'contacts', element: <Contacts />},

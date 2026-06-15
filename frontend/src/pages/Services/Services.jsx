@@ -9,7 +9,7 @@ import ServiceSlider from "./sections/ServiceSlider.jsx";
 export default function Services(){
     return (
         <main>
-            <ServicePrice user={user}/>
+            <ServicePrice/>
             <ServiceSlider/>
         </main>
     )

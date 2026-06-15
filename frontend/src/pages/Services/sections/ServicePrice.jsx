@@ -5,7 +5,7 @@ import ServicePriceOptions from "../components/ServicePriceOptions.jsx";
 import Modal from "../../../components/ui/Modal/Modal.jsx";
 import { API_URL } from "../../../shared/api.js";
 
-export default function ServicePrice({ user }) {
+export default function ServicePrice({user}) {
     const [sections, setSections] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
     const [programs, setPrograms] = useState([]);
