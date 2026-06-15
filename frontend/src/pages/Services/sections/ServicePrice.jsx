@@ -9,7 +9,7 @@ export default function ServicePrice({user}) {
     const [sections, setSections] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
     const [programs, setPrograms] = useState([]);
-    const isAdmin = user?.is_superuser;
+    const isAdmin = Boolean(user?.is_superuser);
     useEffect(() => {
         fetch(`${API_URL}/api/services/`)
             .then(res => res.json())
