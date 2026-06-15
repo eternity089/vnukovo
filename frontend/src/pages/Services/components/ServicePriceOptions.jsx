@@ -5,7 +5,7 @@ export default function ServicePriceOptions({
     title,
     options = [],
     onOpenModal,
-    isAdmin = false,
+    isAdmin = true,
 }) {
     return (
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:gap-20">
