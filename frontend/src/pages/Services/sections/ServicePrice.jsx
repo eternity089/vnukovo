@@ -49,7 +49,7 @@ export default function ServicePrice() {
                                 </h2>
                                 <div className="space-y-8">
                                     {section.filters.map((filter, index) => (
-                                        <ServicePriceOptions key={index} title={filter.title} options={filter.options} onOpenModal={setActiveModal}
+                                        <ServicePriceOptions key={index} title={filter.title} options={filter.options} onOpenModal={setActiveModal} isAdmin={true}
                                         />
                                     ))}
                                 </div>
