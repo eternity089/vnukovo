@@ -5,6 +5,7 @@ import Loader from "./components/ui/Loader/Loader.jsx";
 import "react-datepicker/dist/react-datepicker.css";
 import {API_URL} from "./shared/api.js";
 import {useEffect, useMemo} from "react";
+import CookieBanner from "./cookie/cookie.jsx";
 
 export default function App() {
     const { user, loading } = useAuth();
@@ -18,5 +19,10 @@ export default function App() {
         credentials: "include",
     });
 }, []);
-    return <RouterProvider router={router} />;
+    return (
+        <>
+            <RouterProvider router={router} />
+            <CookieBanner/>
+        </>
+    );
 }
