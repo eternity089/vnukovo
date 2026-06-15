@@ -4,7 +4,7 @@ import { useAuth } from "./context/AuthContext.jsx";
 import Loader from "./components/ui/Loader/Loader.jsx";
 import "react-datepicker/dist/react-datepicker.css";
 import {API_URL} from "./shared/api.js";
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 
 export default function App() {
     const { user, loading } = useAuth();
