@@ -6,7 +6,7 @@ import {
 } from "./data/servicesData";
 import ServiceSlider from "./sections/ServiceSlider.jsx";
 
-export default function Services(){
+export default function Services({user}){
     return (
         <main>
             <ServicePrice user={user}/>
