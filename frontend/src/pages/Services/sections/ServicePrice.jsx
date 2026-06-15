@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import bathImage from "../../../assets/img/price/bath.png";
 import Container from "../../../components/ui/Container/Container.jsx";
 import ServicePriceOptions from "../components/ServicePriceOptions.jsx";
