@@ -1,112 +1,96 @@
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import toast from "react-hot-toast";
-import Loader from "../../ui/Loader/Loader.jsx";
 
-const EditableField = ({
+export default function EditableField({
     value,
     endpoint,
-    field,
-    token,
-    isAdmin,
-    multiline = false,
-    className = ""
-}) => {
+    field = "text",
+    isAdmin
+}) {
     const [editing, setEditing] = useState(false);
     const [text, setText] = useState(value);
     const [loading, setLoading] = useState(false);
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        setText(value);
+    }, [value]);
+
+    useEffect(() => {
+        if (editing && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [editing]);
 
     const save = async () => {
+        if (text === value) {
+            setEditing(false);
+            return;
+        }
+
         try {
             setLoading(true);
 
-            const response = await fetch(endpoint, {
+            const res = await fetch(endpoint, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     [field]: text,
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error();
-            }
+            if (!res.ok) throw new Error();
 
-            toast.success("Изменения сохранены");
+            toast.success("Сохранено");
             setEditing(false);
-        } catch (error) {
-            toast.error("Не удалось сохранить изменения");
+
+        } catch {
+            toast.error("Ошибка сохранения");
         } finally {
             setLoading(false);
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            save();
+        }
+        if (e.key === "Escape") {
+            setText(value);
+            setEditing(false);
+        }
+    };
+
     if (!isAdmin) {
-        return <span className={className}>{value}</span>;
+        return <span>{value}</span>;
     }
 
     return (
-        <>
+        <div className="relative group inline-block">
             {editing ? (
-                <div>
-                    {multiline ? (
-                        <textarea
-                            className="form-control mb-2"
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                    ) : (
-                        <input
-                            className="form-control mb-2"
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                    )}
-
-                    <div className="d-flex gap-2">
-                        <button
-                            className="btn btn-success btn-sm"
-                            onClick={save}
-                            disabled={loading}
-                        >
-                            {loading ? <Loader /> : "Сохранить"}
-                        </button>
-
-                        <button
-                            className="btn btn-secondary btn-sm"
-                            onClick={() => {
-                                setText(value);
-                                setEditing(false);
-                            }}
-                        >
-                            Отмена
-                        </button>
-                    </div>
-                </div>
+                <input
+                    ref={inputRef}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    onBlur={save}
+                    onKeyDown={handleKeyDown}
+                    className="border-b border-h outline-none bg-transparent"
+                />
             ) : (
-                <div
-                    style={{
-                        cursor: "pointer",
-                        position: "relative",
-                    }}
-                    onDoubleClick={() => setEditing(true)}
+                <span
+                    onClick={() => setEditing(true)}
+                    className="cursor-text hover:bg-gray-100 px-1 rounded"
                 >
-                    <span className={className}>{text}</span>
-
-                    <small
-                        style={{
-                            marginLeft: "8px",
-                            color: "#6c757d",
-                        }}
-                    >
-                        ✏️
-                    </small>
-                </div>
+                    {text || "—"}
+                </span>
             )}
-        </>
-    );
-};
 
-export default EditableField;
+            {/* subtle edit hint like Notion */}
+            <span className="ml-2 opacity-0 group-hover:opacity-50 text-xs">
+                ✏️
+            </span>
+        </div>
+    );
+}
