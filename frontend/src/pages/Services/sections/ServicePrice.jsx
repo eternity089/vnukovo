@@ -60,6 +60,7 @@ export default function ServicePrice({user}) {
                 {programs.map((program) => (
                     <div key={program.id} className="mb-6">
                         <h3 className="font-semibold text-2xl text-h">
+                            <>
                             <EditableField
                                 value={`${program.name} `}
                                 endpoint={`${endpoint}/${program.id}`}
@@ -72,6 +73,7 @@ export default function ServicePrice({user}) {
                                 field="price"
                                 isAdmin={isAdmin}
                             />
+                            </>
                         </h3>
                         <p className="text-body text-[1rem]">
                             <EditableField
