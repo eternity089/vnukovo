@@ -1,21 +1,22 @@
 from django.contrib import admin
 from django.apps import apps
+from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from .models import *
 
 
-class HomeBookingInline(admin.StackedInline):
+class HomeBookingInline(StackedInline):
     model = HomeBooking
     extra = 0
     max_num = 1
     can_delete = True
-class BathBookingInline(admin.StackedInline):
+class BathBookingInline(StackedInline):
     model = BathBooking
     extra = 0
     max_num = 1
     can_delete = True
 
 @admin.register(Booking)
-class BookingAdmin(admin.ModelAdmin):
+class BookingAdmin(ModelAdmin):
     list_display = (
         'id',
         'name',
