@@ -64,14 +64,14 @@ export default function ServicePrice({user}) {
                                 value={program.name}
                                 endpoint={`${endpoint}/${program.id}/`}
                                 field="name"
-                                inline={true}
+                                type='text'
                                 isAdmin={isAdmin}
                             />
                             <EditableField
                                 value={program.price}
                                 endpoint={`${endpoint}/${program.id}/`}
                                 field="price"
-                                inline={true}
+                                type="text"
                                 isAdmin={isAdmin}
                             />
                             <span>руб.</span>
