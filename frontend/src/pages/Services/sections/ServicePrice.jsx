@@ -7,7 +7,7 @@ import { API_URL } from "../../../shared/api.js";
 import EditableField from "../../../components/layout/EditableField/EditableField.jsx";
 
 export default function ServicePrice({user}) {
-    const endpoint = `${API_URL}/api/bath-programs`;
+    const endpoint = `${API_URL}/api/bath-program`;
     const [sections, setSections] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
     const [programs, setPrograms] = useState([]);
