@@ -9,6 +9,7 @@ class HomeBookingInline(StackedInline):
     extra = 0
     max_num = 1
     can_delete = True
+
 class BathBookingInline(StackedInline):
     model = BathBooking
     extra = 0

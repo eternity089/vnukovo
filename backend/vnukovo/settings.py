@@ -67,6 +67,13 @@ INSTALLED_APPS = [
     "cloudinary_storage",
 ]
 
+UNFOLD = {
+    "SITE_TITLE": "Администрирование",
+    "SITE_HEADER": "База отдыха",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+}
+
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.getenv("CLOUD_NAME"),
     "API_KEY": os.getenv("API_KEY"),
