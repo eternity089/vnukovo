@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import Button from "../ui/Button/Button.jsx";
 import { getCookie } from "../../utils/cookies";
@@ -91,7 +91,8 @@ export default function RegisterForm() {
             )}
             <input name="password2" value={form.password2} onChange={handleChange} placeholder="Повтор пароля" type="password"
                 className={`input ${errors.password2 ? "border-red-500" : ""}`}/>
-            <input type="checkbox" value={form.rules} onChange={handleChange} id=""/>
+            <input type="checkbox" value={form.rules} onChange={handleChange}/>
+            <p>Я соглашаюсь с <Link to='privacy_policy'>Политикой конфиденциальности</Link> и <Link to='privacy_agreement'>Пользовательским соглашением</Link> и разрешаю обрабатывать мои персональные данные</p>
             {errors.password2 && (
                 <p className="text-red-500 text-sm mt-1">{errors.password2[0]}</p>
             )}
@@ -102,7 +103,7 @@ export default function RegisterForm() {
                 <p className="text-red-500 text-sm">{errors.detail}</p>
             )}
             <Button type="submit">Зарегистрироваться</Button>
-            {/* 🔥 переключение модалки */}
+
             <p className="text-sm text-center text-hover">{" "}
                 <a href='#' type="button" className="text-hover underline" onClick={() => openAuthModal("login")}>У меня есть профиль</a>
             </p>
