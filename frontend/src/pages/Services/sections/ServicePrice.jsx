@@ -4,6 +4,7 @@ import Container from "../../../components/ui/Container/Container.jsx";
 import ServicePriceOptions from "../components/ServicePriceOptions.jsx";
 import Modal from "../../../components/ui/Modal/Modal.jsx";
 import { API_URL } from "../../../shared/api.js";
+import EditableField from "../../../components/layout/EditableField/EditableField.jsx";
 
 export default function ServicePrice({user}) {
     const [sections, setSections] = useState([]);
@@ -56,13 +57,41 @@ export default function ServicePrice({user}) {
             </Container>
             <Modal isOpen={activeModal === "program"} title="Программа парения" onClose={() => setActiveModal(null)}>
                 {programs.map((program) => (
-                    <div key={program.id} className="mb-4">
-                        <h3 className="font-semibold text-2xl text-h">{program.name} - {program.price} руб.</h3>
-                        <p className="text-body text-[1rem]">{program.description}</p>
+                    <div key={program.id} className="mb-6">
+
+                        <h3 className="font-semibold text-2xl text-h">
+                            <EditableField
+                                value={program.name}
+                                endpoint={`/api/programs/${program.id}/`}
+                                field="name"
+                                isAdmin={isAdmin}
+                            />
+                            {" - "}
+                            <EditableField
+                                value={program.price}
+                                endpoint={`/api/programs/${program.id}/`}
+                                field="price"
+                                isAdmin={isAdmin}
+                            />
+                            {" руб."}
+                        </h3>
+
+                        <p className="text-body text-[1rem]">
+                            <EditableField
+                                value={program.description}
+                                endpoint={`/api/programs/${program.id}/`}
+                                field="description"
+                                isAdmin={isAdmin}
+                            />
+                        </p>
+
                         <ul className="list-disc pl-5 text-body">
-                            {program.list.split("\n").map((item, i) => (
-                                <li className="text-[1rem]" key={i}>{item}</li>
-                            ))}
+                            <EditableField
+                                value={program.list}
+                                endpoint={`/api/programs/${program.id}/`}
+                                field="list"
+                                isAdmin={isAdmin}
+                            />
                         </ul>
                     </div>
                 ))}
