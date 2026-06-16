@@ -104,6 +104,30 @@ class BathProgramAPIView(APIView):
         serializer = BathProgramSerializer(programs, many=True)
         return Response(serializer.data)
 
+class BathProgramListAPIView(APIView):
+    def get(self, request):
+        programs = BathProgram.objects.filter(is_active=True)
+        serializer = BathProgramSerializer(programs, many=True)
+        return Response(serializer.data)
+
+class BathProgramDetailAPIView(APIView):
+    def get_object(self, pk):
+        return BathProgram.objects.get(pk=pk)
+
+    def patch(self, request, pk):
+        program = self.get_object(pk)
+        serializer = BathProgramSerializer(
+            program,
+            data=request.data,
+            partial=True
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class BathTimeUpdateAPIView(APIView):
     def patch(self, request, pk):
         item = BathTime.objects.get(pk=pk)
