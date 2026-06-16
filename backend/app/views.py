@@ -110,23 +110,34 @@ class BathProgramListAPIView(APIView):
         serializer = BathProgramSerializer(programs, many=True)
         return Response(serializer.data)
 
+from django.http import JsonResponse
+
 class BathProgramDetailAPIView(APIView):
     def get_object(self, pk):
-        return get_object_or_404(BathProgram, pk=pk)
+        return BathProgram.objects.get(pk=pk)
 
     def patch(self, request, pk):
-        program = self.get_object(pk)
-        serializer = BathProgramSerializer(
-            program,
-            data=request.data,
-            partial=True
-        )
+        try:
+            print("REQUEST DATA:", request.data)  # 🔥 ключевое
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            program = self.get_object(pk)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer = BathProgramSerializer(
+                program,
+                data=request.data,
+                partial=True
+            )
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+
+            print("SERIALIZER ERRORS:", serializer.errors)
+            return Response(serializer.errors, status=400)
+
+        except Exception as e:
+            print("FATAL ERROR:", str(e))
+            return JsonResponse({"error": str(e)}, status=500)
 
 class BathTimeUpdateAPIView(APIView):
     def patch(self, request, pk):
