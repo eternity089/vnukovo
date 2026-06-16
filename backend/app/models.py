@@ -28,6 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to='avatars', default='avatars/default_avatar.png')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False, verbose_name='Администратор')
+    policy = models.BooleanField(default=True, verbose_name='Соглашение с политикой')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
