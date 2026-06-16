@@ -68,7 +68,7 @@ INSTALLED_APPS = [
 ]
 
 UNFOLD = {
-    "SITE_TITLE": "Администрирование",
+    "SITE_TITLE": "Панель администратора",
     "SITE_HEADER": "Хутор Внуково",
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
