@@ -59,7 +59,7 @@ export default function ServicePrice({user}) {
             <Modal isOpen={activeModal === "program"} title="Программа парения" onClose={() => setActiveModal(null)}>
                 {programs.map((program) => (
                     <div key={program.id} className="mb-6">
-                        <h3 className="font-semibold text-2xl text-h flex">
+                        <h3 className="font-semibold text-2xl text-h flex items-start">
                             <EditableField
                                 value={program.name}
                                 endpoint={`${endpoint}/${program.id}/`}
