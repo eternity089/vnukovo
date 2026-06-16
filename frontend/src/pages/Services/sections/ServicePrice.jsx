@@ -58,41 +58,29 @@ export default function ServicePrice({user}) {
             <Modal isOpen={activeModal === "program"} title="Программа парения" onClose={() => setActiveModal(null)}>
                 {programs.map((program) => (
                     <div key={program.id} className="mb-6">
-
                         <h3 className="font-semibold text-2xl text-h">
                             <EditableField
-                                value={program.name}
-                                endpoint={`/api/programs/${program.id}/`}
-                                field="name"
+                                value={`${program.name} - ${program.price} руб.`}
+                                endpoint={`${endpoint}/${program.id}`}
+                                field="name_price"
                                 isAdmin={isAdmin}
                             />
-                            {" - "}
-                            <EditableField
-                                value={program.price}
-                                endpoint={`/api/programs/${program.id}/`}
-                                field="price"
-                                isAdmin={isAdmin}
-                            />
-                            {" руб."}
                         </h3>
-
                         <p className="text-body text-[1rem]">
                             <EditableField
                                 value={program.description}
-                                endpoint={`/api/programs/${program.id}/`}
+                                endpoint={`${endpoint}/${program.id}`}
                                 field="description"
                                 isAdmin={isAdmin}
                             />
                         </p>
-
-                        <ul className="list-disc pl-5 text-body">
-                            <EditableField
-                                value={program.list}
-                                endpoint={`/api/programs/${program.id}/`}
-                                field="list"
-                                isAdmin={isAdmin}
-                            />
-                        </ul>
+                        <EditableField
+                            value={program.list}
+                            endpoint={`${endpoint}/${program.id}`}
+                            field="list"
+                            isAdmin={isAdmin}
+                            type="list"
+                        />
                     </div>
                 ))}
             </Modal>
