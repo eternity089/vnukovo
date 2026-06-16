@@ -21,13 +21,13 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
-    name = models.CharField(max_length=120)
-    surname = models.CharField(max_length=120)
-    phone = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(unique=True, verbose_name='Почта')
+    name = models.CharField(max_length=120, verbose_name='Имя')
+    surname = models.CharField(max_length=120, verbose_name='Фамилия')
+    phone = models.CharField(max_length=255, unique=True, verbose_name='Номер телефона')
     avatar = models.ImageField(upload_to='avatars', default='avatars/default_avatar.png')
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False, verbose_name='Администратор')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -65,8 +65,8 @@ class Booking(models.Model):
 
 class HomeBooking(models.Model):
     booking = models.OneToOneField('Booking', on_delete=models.SET_NULL, null=True, related_name='home_booking', verbose_name='Бронирование')
-    check_in = models.DateField()
-    check_out = models.DateField()
+    check_in = models.DateField(verbose_name='Дата заселения')
+    check_out = models.DateField(verbose_name='Дата выселения')
     guests_count = models.PositiveIntegerField(verbose_name='Количество человек')
     extra_place = models.BooleanField(verbose_name='Дополнительное место', default=False)
     with_pet = models.BooleanField(verbose_name='С животными', default=False)
@@ -122,8 +122,8 @@ class Review(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, null=True, related_name='userReview')
     rating = models.PositiveSmallIntegerField(verbose_name='Оценка посещения')
     text = models.TextField(verbose_name='Текст отзыва')
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_published = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
 
     class Meta:
         verbose_name = 'Отзывы'
