@@ -7,21 +7,28 @@ export default function EditableField({
     endpoint,
     field = "text",
     isAdmin,
-    type = "text", // 👈 добавили тип
+    type = "text",
 }) {
     const [editing, setEditing] = useState(false);
     const [text, setText] = useState("");
+    const [list, setList] = useState([]);
     const [loading, setLoading] = useState(false);
     const inputRef = useRef(null);
 
-    // нормализация входного значения
+    // 👉 нормализация входа
     useEffect(() => {
         if (type === "list") {
-            if (Array.isArray(value)) {
-                setText(value.join("\n"));
-            } else {
-                setText(value || "");
-            }
+            const arr =
+                Array.isArray(value)
+                    ? value
+                    : (value || "")
+                          .replace(/\r/g, "")
+                          .split(";")
+                          .map(i => i.trim())
+                          .filter(Boolean);
+
+            setList(arr);
+            setText(arr.join("\n"));
         } else {
             setText(value || "");
         }
@@ -41,7 +48,7 @@ export default function EditableField({
 
         const normalizedValue =
             type === "list"
-                ? text.split("\n").map((i) => i.trim()).filter(Boolean).join("\n")
+                ? list.join(";") // 👈 единый формат для API
                 : text;
 
         if (normalizedValue === value) {
@@ -81,27 +88,29 @@ export default function EditableField({
         }
     };
 
+    const handleListChange = (val) => {
+        const arr = val
+            .split("\n")
+            .map(i => i.trim())
+            .filter(Boolean);
+
+        setList(arr);
+        setText(val);
+    };
+
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && type !== "list") save();
         if (e.key === "Escape") {
-            setText(
-                type === "list"
-                    ? (Array.isArray(value) ? value.join("\n") : value)
-                    : value
-            );
             setEditing(false);
         }
     };
 
+    // ===== VIEW MODE (не админ) =====
     if (!isAdmin) {
         if (type === "list") {
-            const items = Array.isArray(value)
-                ? value
-                : (value || "").split("\n");
-
             return (
                 <ul className="list-disc pl-5 text-body">
-                    {items.map((item, i) => (
+                    {list.map((item, i) => (
                         <li key={i} className="text-[1rem]">
                             {item}
                         </li>
@@ -113,6 +122,7 @@ export default function EditableField({
         return <span>{value}</span>;
     }
 
+    // ===== ADMIN MODE =====
     return (
         <div className="relative group inline-block w-full">
             {editing ? (
@@ -120,9 +130,9 @@ export default function EditableField({
                     <textarea
                         ref={inputRef}
                         value={text}
-                        onChange={(e) => setText(e.target.value)}
+                        onChange={(e) => handleListChange(e.target.value)}
                         onBlur={save}
-                        rows={5}
+                        rows={6}
                         className="border border-h p-2 w-full outline-none bg-transparent"
                     />
                 ) : (
@@ -139,14 +149,11 @@ export default function EditableField({
                 <div onClick={() => setEditing(true)} className="cursor-text">
                     {type === "list" ? (
                         <ul className="list-disc pl-5 text-body">
-                            {text
-                                .split("\n")
-                                .filter(Boolean)
-                                .map((item, i) => (
-                                    <li key={i} className="text-[1rem]">
-                                        {item}
-                                    </li>
-                                ))}
+                            {list.map((item, i) => (
+                                <li key={i} className="text-[1rem]">
+                                    {item}
+                                </li>
+                            ))}
                         </ul>
                     ) : (
                         <span className="hover:bg-gray-100 px-1 rounded">
