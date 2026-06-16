@@ -39,6 +39,9 @@ class UserRegisterForm(UserCreationForm):
                 "class": "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400",
                 "placeholder": "Email"
             }),
+            "rules" : forms.CheckboxInput(attrs={
+                "class" : "w-full px-4 py-2",
+            })
         }
 
     def save(self, commit=True):

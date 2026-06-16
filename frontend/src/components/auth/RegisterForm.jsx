@@ -91,6 +91,7 @@ export default function RegisterForm() {
             )}
             <input name="password2" value={form.password2} onChange={handleChange} placeholder="Повтор пароля" type="password"
                 className={`input ${errors.password2 ? "border-red-500" : ""}`}/>
+            <input type="checkbox" value={form.rules} onChange={handleChange} id=""/>
             {errors.password2 && (
                 <p className="text-red-500 text-sm mt-1">{errors.password2[0]}</p>
             )}
