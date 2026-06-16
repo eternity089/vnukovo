@@ -61,9 +61,15 @@ export default function ServicePrice({user}) {
                     <div key={program.id} className="mb-6">
                         <h3 className="font-semibold text-2xl text-h">
                             <EditableField
-                                value={`${program.name} - ${program.price} руб.`}
+                                value={`${program.name} `}
                                 endpoint={`${endpoint}/${program.id}`}
-                                field="name_price"
+                                field="name"
+                                isAdmin={isAdmin}
+                            />
+                            <EditableField
+                                value={`- ${program.price} руб.`}
+                                endpoint={`${endpoint}/${program.id}`}
+                                field="price"
                                 isAdmin={isAdmin}
                             />
                         </h3>
