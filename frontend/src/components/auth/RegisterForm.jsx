@@ -91,8 +91,19 @@ export default function RegisterForm() {
             )}
             <input name="password2" value={form.password2} onChange={handleChange} placeholder="Повтор пароля" type="password"
                 className={`input ${errors.password2 ? "border-red-500" : ""}`}/>
-            <input type="checkbox" value={form.rules} onChange={handleChange}/>
-            <p>Я соглашаюсь с <Link to='privacy_policy'>Политикой конфиденциальности</Link> и <Link to='privacy_agreement'>Пользовательским соглашением</Link> и разрешаю обрабатывать мои персональные данные</p>
+            <label className="flex items-start gap-2 cursor-pointer">
+                <input type="checkbox" name="rules" checked={form.rules} onChange={handleChange} className="mt-1"/>
+                <span>
+                    Я соглашаюсь с{" "}
+                    <Link to="/privacy_policy" className="underline">
+                        Политикой конфиденциальности</Link>{" "}
+                    и{" "}
+                    <Link to="/privacy_agreement" className="underline">
+                        Пользовательским соглашением
+                    </Link>{" "}
+                    и разрешаю обрабатывать мои персональные данные.
+                </span>
+            </label>
             {errors.password2 && (
                 <p className="text-red-500 text-sm mt-1">{errors.password2[0]}</p>
             )}
