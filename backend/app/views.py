@@ -112,7 +112,7 @@ class BathProgramListAPIView(APIView):
 
 class BathProgramDetailAPIView(APIView):
     def get_object(self, pk):
-        return BathProgram.objects.get(pk=pk)
+        return get_object_or_404(BathProgram, pk=pk)
 
     def patch(self, request, pk):
         program = self.get_object(pk)
