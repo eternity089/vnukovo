@@ -59,17 +59,17 @@ export default function ServicePrice({user}) {
             <Modal isOpen={activeModal === "program"} title="Программа парения" onClose={() => setActiveModal(null)}>
                 {programs.map((program) => (
                     <div key={program.id} className="mb-6">
-                        <h3 className="font-semibold text-2xl text-h">
+                        <h3 className="font-semibold text-2xl text-h flex">
                             <EditableField
                                 value={program.name}
-                                endpoint={`${endpoint}/${program.id}`}
+                                endpoint={`${endpoint}/${program.id}/`}
                                 field="name"
                                 isAdmin={isAdmin}
                             />
 
                             <EditableField
                                 value={program.price}
-                                endpoint={`${endpoint}/${program.id}`}
+                                endpoint={`${endpoint}/${program.id}/`}
                                 field="price"
                                 isAdmin={isAdmin}
                             />
@@ -78,14 +78,14 @@ export default function ServicePrice({user}) {
                         <p className="text-body text-[1rem]">
                             <EditableField
                                 value={program.description}
-                                endpoint={`${endpoint}/${program.id}`}
+                                endpoint={`${endpoint}/${program.id}/`}
                                 field="description"
                                 isAdmin={isAdmin}
                             />
                         </p>
                         <EditableField
                             value={program.list}
-                            endpoint={`${endpoint}/${program.id}`}
+                            endpoint={`${endpoint}/${program.id}/`}
                             field="list"
                             isAdmin={isAdmin}
                             type="list"
