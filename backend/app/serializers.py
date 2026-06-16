@@ -84,13 +84,16 @@ class HomeBookingSerializer(serializers.ModelSerializer):
         exclude = ['booking']
 
 class BathProgramSerializer(serializers.ModelSerializer):
-    steam_program_name = serializers.CharField(
-        source='steam_program.name',
-        read_only=True
-    )
     class Meta:
         model = BathProgram
-        fields = '__all__'
+        fields = [
+            "id",
+            "name",
+            "price",
+            "description",
+            "list",
+            "is_active",
+        ]
 
 class BathBookingSerializer(serializers.ModelSerializer):
     steam_program = BathProgramSerializer(read_only=True)
