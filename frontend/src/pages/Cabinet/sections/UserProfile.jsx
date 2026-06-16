@@ -9,7 +9,7 @@ export default function ProfilePage({ user }) {
     return (
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between mb-5">
             <CabinetSidebar activeTab={activeTab} setActiveTab={setActiveTab}/>
-            <div className="flex-1 rounded-2xl border border-gray-200 p-6 lg:p-10">
+            <div className="flex-1 rounded-2xl border border-gray-200 p-4 lg:p-10">
                 {activeTab === 'profile' && (
                     <ProfileTab/>
                 )}

@@ -236,7 +236,7 @@ export default function CreateOrder() {
             </div>
             {/* домик */}
           {bookingType.house && (
-            <section className="rounded-2xl border border-input/20 p-6 flex flex-col gap-5 w-full">
+            <section className="rounded-2xl lg:border lg:border-input/20 p-4 lg:p-6 flex flex-col gap-5 w-full">
                 <h3 className="text-input text-2xl font-medium">Домик</h3>
                 <div className="flex flex-col lg:flex-row w-full gap-6">
                     <div className="lg:w-2/6 shrink-0 relative">
@@ -317,9 +317,7 @@ export default function CreateOrder() {
                             </div>
                         )}
                     </div>
-                    {/* форма */}
                     <div className="flex flex-col gap-6 flex-1">
-                        {/* гости */}
                         <div>
                             <label className="block mb-3 text-sm text-gray-500">Количество гостей</label>
                             <div className="flex items-center gap-4">
@@ -350,7 +348,6 @@ export default function CreateOrder() {
                                 >+</button>
                             </div>
                         </div>
-                        {/* опции */}
                         <div className="flex flex-col gap-3">
                             <label className="flex items-center gap-3">
                                 <input type="checkbox" checked={homeDates.extra_place}
@@ -380,7 +377,7 @@ export default function CreateOrder() {
           )}
             {/* баня */}
             {bookingType.bath && (
-                <section className="rounded-2xl border border-input/20 p-6 flex flex-col gap-5">
+                <section className="rounded-2xl lg:border lg:border-input/20 p-4 lg:p-6 flex flex-col gap-5">
                     <h3 className="text-input text-2xl font-medium">Баня</h3>
                     <button type="button" onClick={() => setOpenBathCalendar(true)}
                     className="w-full border border-input/20 rounded-xl p-3 text-left text-md text-input hover:border-h transition">
@@ -693,7 +690,7 @@ export default function CreateOrder() {
                 </section>
             )}
             {/* COMMENT */}
-            <section className="rounded-2xl border border-input/20 p-6">
+            <section className="rounded-2xl lg:border lg:border-input/20 lg:p-6">
                 <h3 className="text-input text-xl font-medium mb-4">Комментарий</h3>
                 <textarea rows="5" className="w-full resize-none border border-h p-3 rounded-md" placeholder="Ваши пожелания..."
                     onChange={(e) =>
