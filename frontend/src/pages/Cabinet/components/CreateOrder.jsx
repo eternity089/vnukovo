@@ -301,13 +301,26 @@ export default function CreateOrder() {
                                         locale={ru}
                                         excludeDates={disabledDates}
                                         calendarClassName="airbnb-calendar"
+                                        dayClassName={(date) => {
+                                        const dateString = formatDate(date);
+                                        if (houseAvailability[dateString] >= 2) {
+                                            return "house-full";
+                                        }
+                                        if (houseAvailability[dateString] === 1) {
+                                            return "house-half";
+                                        }
+                                        return "";
+                                    }}
                                         onChange={(update) => {
                                             setDateRange(update);
-                                            setHomeDates(prev => ({
-                                                ...prev,
-                                                check_in: formatDate(update[0]),
-                                                check_out: formatDate(update[1])
-                                            }));
+                                            if (update[0] && update[1]) {
+                                                setHomeDates(prev => ({
+                                                    ...prev,
+                                                    check_in: formatDate(update[0]),
+                                                    check_out: formatDate(update[1])
+                                                }));
+                                                setOpenCalendar(false); // закрываем после выбора
+                                            }
                                         }}
                                     />
                                 </div>
