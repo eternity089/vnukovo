@@ -234,3 +234,5 @@ class BathBookingAdmin(ModelAdmin):
         "bath_tub",
         "steam_program",
     )
+
+    

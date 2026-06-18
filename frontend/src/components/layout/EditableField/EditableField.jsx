@@ -163,7 +163,7 @@ export default function EditableField({
                 </div>
             )}
 
-            <span className="ml-2 opacity-0 group-hover:opacity-50 text-xs">
+            <span className="ml-2 text-xs">
                 ✏️
             </span>
         </div>

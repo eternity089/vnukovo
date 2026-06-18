@@ -403,7 +403,7 @@ export default function CreateOrder() {
                             <div className="absolute z-50 mt-3 bg-white border border-border/30 rounded-2xl shadow-xl p-4">
                                 <div className="flex gap-6">
                                     {/* LEFT: CALENDAR */}
-                                    <DatePicker selected={bathDateTime} minDate={new Date()}
+                                    <DatePicker selected={bathDateTime} minDate={new Date()} locale={ru}
                                         onChange={(date) => {
                                             setBathDateTime(date);
                                             setBathData(prev => ({
@@ -447,7 +447,6 @@ export default function CreateOrder() {
                                 <button type="button" onClick={() => setOpenBathCalendar(false)}>✕</button>
                             </div>
                             <div className="flex-1 overflow-y-auto flex flex-col items-center p-4 gap-6 min-h-0">
-                                {/* календарь */}
                                 <DatePicker minDate={new Date()}
                                     selected={bathDateTime}
                                     onChange={(date) => {
@@ -458,7 +457,6 @@ export default function CreateOrder() {
                                         }));
                                     }} inline locale={ru} calendarClassName="airbnb-calendar"
                                 />
-                                {/* время */}
                                 <div className="w-full max-w-[280px]">
                                     <label className="text-sm text-gray-500">Время</label>
                                     <input type="time" className="input w-full mt-2"
