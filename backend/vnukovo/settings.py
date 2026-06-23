@@ -10,9 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 DEBUG = os.getenv('DEBUG') == 'False'
 
-import os
-
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = ["hutorvnukovo.ru", "www.hutorvnukovo.ru", "localhost"]
 
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
