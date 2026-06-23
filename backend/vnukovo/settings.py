@@ -13,12 +13,11 @@ DEBUG = os.getenv('DEBUG') == 'False'
 import os
 
 raw_hosts = os.getenv("ALLOWED_HOSTS", "")
-ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(",") if h.strip()]
+ALLOWED_HOSTS = ["hutorvnukovo.ru", "www.hutorvnukovo.ru"]
 
 CSRF_TRUSTED_ORIGINS = [
-    o.strip()
-    for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
-    if o.strip()
+    "https://hutorvnukovo.ru",
+    "https://www.hutorvnukovo.ru",
 ]
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
