@@ -11,17 +11,13 @@ sys.path.append(str(BASE_DIR))
 DEBUG = os.getenv('DEBUG') == 'False'
 
 import os
-ALLOWED_HOSTS = [
-    "hutorvnukovo.ru",
-    "www.hutorvnukovo.ru",
-    "backend",
-    "localhost",
-    "127.0.0.1"
-]
+
+raw_hosts = os.getenv("ALLOWED_HOSTS", "")
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://hutorvnukovo.ru",
-    "http://hutorvnukovo.ru",
+    o.strip()
+    for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if o.strip()
 ]
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
@@ -29,11 +25,11 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': '^nU1@^0HU1@r',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -173,7 +169,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = '/app/staticfiles'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
