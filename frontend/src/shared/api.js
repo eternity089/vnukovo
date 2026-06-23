@@ -1,2 +1,2 @@
 
-export const API_URL ='https://vnukovo-production.up.railway.app'
+export const API_URL ='https://hutorvnukovo.ru'

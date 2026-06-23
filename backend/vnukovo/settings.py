@@ -11,8 +11,6 @@ sys.path.append(str(BASE_DIR))
 DEBUG = os.getenv('DEBUG') == 'False'
 
 import os
-
-raw_hosts = os.getenv("ALLOWED_HOSTS", "")
 ALLOWED_HOSTS = [
     "hutorvnukovo.ru",
     "www.hutorvnukovo.ru",
