@@ -26,6 +26,7 @@ export default function ServicePriceOptions({
                                 endpoint={endpoint}
                                 field="text"
                                 isAdmin={isAdmin}
+                                className='flex'
                             />
 
                             {item.modal && (
