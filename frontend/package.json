@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "homepage": "http://161.104.19.134:3000",
   "private": true,
   "version": "0.0.0",
   "type": "module",
