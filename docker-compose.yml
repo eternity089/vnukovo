@@ -1,27 +1,19 @@
 services:
   db:
     image: postgres:16
-    restart: always
-    environment:
-      POSTGRES_DB: django_db
-      POSTGRES_USER: django_user
-      POSTGRES_PASSWORD: django_pass
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
   backend:
     build: ./backend
-    restart: always
-    env_file:
-      - .env
-    depends_on:
-      - db
 
   frontend:
     build: ./frontend
-    restart: always
-    depends_on:
-      - backend
 
-volumes:
-  postgres_data:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
