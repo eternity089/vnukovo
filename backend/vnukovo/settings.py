@@ -13,7 +13,13 @@ DEBUG = os.getenv('DEBUG') == 'False'
 import os
 
 raw_hosts = os.getenv("ALLOWED_HOSTS", "")
-ALLOWED_HOSTS = ["hutorvnukovo.ru", "www.hutorvnukovo.ru"]
+ALLOWED_HOSTS = [
+    "hutorvnukovo.ru",
+    "www.hutorvnukovo.ru",
+    "backend",
+    "localhost",
+    "127.0.0.1"
+]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://hutorvnukovo.ru",
