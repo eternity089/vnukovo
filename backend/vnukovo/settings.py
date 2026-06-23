@@ -23,7 +23,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://hutorvnukovo.ru",
-    "https://www.hutorvnukovo.ru",
+    "http://hutorvnukovo.ru",
 ]
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
