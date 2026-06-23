@@ -8,7 +8,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
-DEBUG = os.getenv('DEBUG') == 'True'
+DEBUG = os.getenv('DEBUG') == 'False'
 
 import os
 
@@ -24,7 +24,14 @@ CSRF_TRUSTED_ORIGINS = [
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
 
 DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DATABASE_URL", "").strip())
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_db',
+        'USER': 'django_user',
+        'PASSWORD': 'django_pass',
+        'HOST': 'db',
+        'PORT': 5432,
+    }
 }
 
 # Cookie Session настройка
@@ -162,7 +169,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
