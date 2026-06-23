@@ -12,7 +12,7 @@ DEBUG = os.getenv('DEBUG') == 'False'
 
 import os
 
-raw_hosts = os.getenv("ALLOWED_HOSTS", "")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "")
 
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
