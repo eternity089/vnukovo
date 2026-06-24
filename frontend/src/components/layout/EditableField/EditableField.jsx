@@ -125,7 +125,7 @@ export default function EditableField({
 
     // ===== ADMIN MODE =====
     return (
-        <div className={`relative group inline-block w-full ${className} `}>
+        <div className={`relative group w-full ${className} `}>
             {editing ? (
                 type === "list" ? (
                     <textarea
