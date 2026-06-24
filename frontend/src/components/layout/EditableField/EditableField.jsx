@@ -8,6 +8,7 @@ export default function EditableField({
     field = "text",
     isAdmin,
     type = "text",
+    className = ""
 }) {
     const [editing, setEditing] = useState(false);
     const [text, setText] = useState("");
@@ -109,7 +110,7 @@ export default function EditableField({
     if (!isAdmin) {
         if (type === "list") {
             return (
-                <ul className="list-disc pl-5 text-body">
+                <ul className={`list - disc pl-5 text-body ${className}`}>
                     {list.map((item, i) => (
                         <li key={i} className="text-[1rem]">
                             {item}
