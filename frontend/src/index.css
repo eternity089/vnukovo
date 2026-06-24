@@ -72,7 +72,7 @@ p {
 }
 
 .input {
-  @apply w-full px-2 py-1.5 text-sm md:text-md md:px-4 md:py-3 border rounded-full border-h/60 hover:border-hover placeholder:text-h focus:outline-none focus:ring-1 focus:ring-input;
+  @apply w-full px-2 py-1.5 text-sm md:text-base md:px-4 md:py-3 border rounded-full border-h/60 hover:border-hover placeholder:text-h focus:outline-none focus:ring-1 focus:ring-input;
 }
 
 .cls-1{
