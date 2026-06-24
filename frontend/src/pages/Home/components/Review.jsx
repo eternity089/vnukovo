@@ -6,9 +6,12 @@ export default function Review({
     rating
 }) {
     return (
-        <div className="py-7 px-5 md:w-[45vw] lg:w-[27vw] rounded-2xl bg-gray-50 border border-border/30">
+        <div className="py-7 px-5 w-full md:w-[45vw] lg:w-[27vw] rounded-2xl bg-gray-50 border border-border/30">
             <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full overflow-hidden shrink-0">
+                        <img src={avatar || "/default_avatar.png"} alt={user_name} className="w-full h-full object-cover"/>
+                    </div>
                     <span className="text-xl font-medium">{user_name}</span>
                 </div>
                 <div className="flex gap-1">

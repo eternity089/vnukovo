@@ -14,14 +14,14 @@ export default function Footer(){
                         <Link to="/" className="w-fit">
                             <img src={logo} alt="Логотип" className="w-16 h-16 rounded-full object-cover"/>
                         </Link>
-                        <div className="flex flex-col gap-10 sm:flex-row w-11/12 sm:justify-between lg:w-2/3">
-                            <nav className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-10 sm:flex-row w-11/12 items-center sm:items-baseline sm:justify-between lg:w-2/3">
+                            <nav className="flex flex-col gap-5 items-center sm:items-baseline">
                                 {navigationLinks.slice(0,3).map((link) => (
                                     <Link to={link.path} key={link.path} className="group relative">{link.label}
                                     <div className="absolute h-px w-0 bg-white transition-all duration-300 group-hover:w-full"></div></Link>
                                 ))}
                             </nav>
-                            <nav className="flex flex-col gap-5">
+                            <nav className="flex flex-col gap-5 items-center sm:items-baseline">
                                 {navigationLinks.slice(3).map((link) => (
                                     <Link to={link.path} key={link.path} className="group relative">{link.label}
                                     <div className="absolute h-px w-0 bg-white transition-all duration-300 group-hover:w-full"></div></Link>
