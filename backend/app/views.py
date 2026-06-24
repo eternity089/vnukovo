@@ -292,6 +292,15 @@ class DeleteAvatarAPIView(APIView):
             status=status.HTTP_200_OK
         )
 
+class DeleteProfileAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def delete(self, request):
+        request.user.delete()
+        return Response(
+            {"detail": "Аккаунт удалён"},
+            status=status.HTTP_204_NO_CONTENT
+        )
+
 class BookingCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]
     home_booking = HomeBookingSerializer(required=False, allow_null=True)

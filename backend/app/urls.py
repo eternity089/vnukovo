@@ -32,4 +32,5 @@ urlpatterns = [
     path('bath_cup/<int:pk>/', BathCupUpdateAPIView.as_view(), name='update_cup'),
     path('bath_option/<int:pk>/', BathOptionUpdateAPIView.as_view(), name='update_option'),
     path('home_price/<int:pk>/', HomePriceUpdateAPIView.as_view(), name='update_price'),
+    path("cabinet/delete/",DeleteProfileAPIView.as_view(),name="delete-profile"),
 ]

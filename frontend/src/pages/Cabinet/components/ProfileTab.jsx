@@ -5,7 +5,10 @@ import Loader from "../../../components/ui/Loader/Loader.jsx";
 import toast from 'react-hot-toast'
 import {API_URL} from "../../../shared/api.js";
 import {getCSRF} from "../../../api/csrf.js";
+import { useNavigate } from "react-router-dom";
+
 export default function ProfileTab() {
+    const navigate = useNavigate();
     const { user, setUser } = useAuth();
     const fileInputRef = useRef(null);
     const [form, setForm] = useState({
@@ -68,6 +71,40 @@ export default function ProfileTab() {
         }
     toast.success('Аватар удален')
     }
+    const handleDeleteProfile = async () => {
+        const confirmed = window.confirm(
+            "Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить."
+        );
+
+        if (!confirmed) return;
+
+        try {
+            const csrfToken = await getCSRF();
+
+            const res = await fetch(`${API_URL}/api/cabinet/delete/`, {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                },
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                toast.error(data.detail || "Ошибка удаления аккаунта");
+                return;
+            }
+
+            setUser(null);
+
+            toast.success("Аккаунт удалён");
+
+            navigate("/");
+        } catch (error) {
+            console.error(error);
+            toast.error("Не удалось удалить аккаунт");
+        }
+    };
     const handleSave = async () => {
         setErrors({})
         const formData = new FormData()
@@ -147,6 +184,10 @@ export default function ProfileTab() {
                 <div className="flex flex-col gap-3 pt-4 sm:flex-row">
                     {/*<Button type="button">Изменить пароль</Button>*/}
                     <Button type="button" onClick={handleSave}>Сохранить изменения</Button>
+                     <button type="button" onClick={handleDeleteProfile}
+                             className="px-6 py-3 rounded-full border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition">
+                         Удалить аккаунт
+                     </button>
                 </div>
                 {errors.detail && (
                     <p className="text-red-500 text-sm">
