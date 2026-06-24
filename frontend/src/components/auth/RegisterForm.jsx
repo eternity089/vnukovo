@@ -19,14 +19,14 @@ export default function RegisterForm() {
         email: "",
         password: "",
         password2: "",
-        rules: ""
+        rules: false
     });
     const [errors, setErrors] = useState({});
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
         setForm((prev) => ({
             ...prev,
-            [name]: value
+            [name]: type === "checkbox" ? checked : value
         }));
         setErrors((prev) => ({
             ...prev,
@@ -105,6 +105,9 @@ export default function RegisterForm() {
                     и разрешаю обрабатывать мои персональные данные.
                 </span>
             </label>
+            {errors.rules && (
+                <p className="text-red-500 text-sm">{errors.rules[0]}</p>
+            )}
             {errors.password2 && (
                 <p className="text-red-500 text-sm mt-1">{errors.password2[0]}</p>
             )}

@@ -47,10 +47,16 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ['name', 'surname', 'email', 'phone', 'password', 'password2']
+        fields = ['name', 'surname', 'email', 'phone', 'password', 'password2', 'rules']
     def validate(self, data):
         if data['password'] != data['password2']:
-            raise serializers.ValidationError({'password2': 'Пароли не совпадают'})
+            raise serializers.ValidationError({
+                'password2': 'Пароли не совпадают'
+            })
+        if not data.get('rules'):
+            raise serializers.ValidationError({
+                'rules': 'Необходимо принять пользовательское соглашение.'
+            })
         return data
     def create(self, validated_data):
         validated_data.pop('password2')
