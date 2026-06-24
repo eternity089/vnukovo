@@ -20,7 +20,7 @@ class UserRegisterForm(UserCreationForm):
     )
     class Meta:
         model = User
-        fields = ["name", "surname", "phone", "email"]
+        fields = ["name", "surname", "phone", "email", "rules"]
 
         widgets = {
             "name": forms.TextInput(attrs={

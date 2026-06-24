@@ -18,7 +18,8 @@ export default function RegisterForm() {
         phone: "",
         email: "",
         password: "",
-        password2: ""
+        password2: "",
+        rules: ""
     });
     const [errors, setErrors] = useState({});
     const handleChange = (e) => {
@@ -92,7 +93,7 @@ export default function RegisterForm() {
             <input name="password2" value={form.password2} onChange={handleChange} placeholder="Повтор пароля" type="password"
                 className={`input ${errors.password2 ? "border-red-500" : ""}`}/>
             <label className="flex items-start gap-2 cursor-pointer text-body">
-                <input type="checkbox" name="rules" checked={form.rules} onChange={handleChange} className="mt-1"/>
+                <input type="checkbox" name="rules" checked={form.rules} onChange={handleChange} className="mt-1" required/>
                 <span>
                     Я соглашаюсь с{" "}
                     <Link to="/privacy_policy" className="underline text-h">
