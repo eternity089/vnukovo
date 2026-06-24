@@ -8,7 +8,7 @@ export default function EditableField({
     field = "text",
     isAdmin,
     type = "text",
-    className = ""
+    className = "",
 }) {
     const [editing, setEditing] = useState(false);
     const [text, setText] = useState("");
@@ -110,7 +110,7 @@ export default function EditableField({
     if (!isAdmin) {
         if (type === "list") {
             return (
-                <ul className={`list - disc pl-5 text-body ${className}`}>
+                <ul className={`list - disc pl-5 text-body`}>
                     {list.map((item, i) => (
                         <li key={i} className="text-[1rem]">
                             {item}
@@ -125,7 +125,7 @@ export default function EditableField({
 
     // ===== ADMIN MODE =====
     return (
-        <div className="relative group inline-block w-full">
+        <div className={`relative group inline-block w-full ${className}`}>
             {editing ? (
                 type === "list" ? (
                     <textarea
