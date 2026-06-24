@@ -66,6 +66,7 @@ export default function ServicePrice({user}) {
                                 field="name"
                                 type='text'
                                 isAdmin={isAdmin}
+                                className='flex'
                             />
                             <EditableField
                                 value={program.price}
@@ -73,6 +74,7 @@ export default function ServicePrice({user}) {
                                 field="price"
                                 type="text"
                                 isAdmin={isAdmin}
+                                className='flex'
                             />
                             <span>руб.</span>
                         </h3>
