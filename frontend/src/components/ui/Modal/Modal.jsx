@@ -14,7 +14,7 @@ export default function Modal({isOpen, onClose, children, title, list}){
     if(!isOpen) return null
     return(
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-           <div className="bg-white w-[90vw] max-h-[80vh] max-w-2xl rounded-xl relative flex flex-col">
+           <div className="bg-white w-[90vw] max-h-[90vh] md:max-h-[85vh] max-w-2xl rounded-xl relative flex flex-col">
                <div className="p-6 pb-0 w-full flex items-center justify-between mb-6 mx-auto">
                    <h2>{title}</h2>
                    <button onClick={onClose} className='text-2xl text-h hover:text-input leading-none'>✕</button>

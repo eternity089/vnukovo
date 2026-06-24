@@ -94,7 +94,7 @@ export default function RegisterForm() {
                 className={`input ${errors.password2 ? "border-red-500" : ""}`}/>
             <label className="flex items-start gap-2 cursor-pointer text-body">
                 <input type="checkbox" name="rules" checked={form.rules} onChange={handleChange} className="mt-1" required/>
-                <span>
+                <span className='text-sm'>
                     Я соглашаюсь с{" "}
                     <Link to="/privacy_policy" className="underline text-h">
                         Политикой конфиденциальности</Link>{" "}
