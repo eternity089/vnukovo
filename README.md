@@ -41,7 +41,6 @@
 - React
 - React Router
 - Tailwind CSS
-- Swiper
 - React Hot Toast
 - Fetch API
 
@@ -61,19 +60,6 @@
 
 ---
 
-# Структура проекта
-
-```
-project/
-│
-├── backend/          # Django
-├── frontend/         # React
-├── nginx/            # Конфигурация Nginx
-├── docker-compose.yml
-└── README.md
-```
-
----
 
 # Запуск проекта
 
